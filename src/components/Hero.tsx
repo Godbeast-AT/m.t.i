@@ -1,6 +1,8 @@
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 
+import Magnetic from "./Magnetic";
+
 export default function Hero() {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -18,46 +20,94 @@ export default function Hero() {
       <div className="absolute inset-0 z-0">
         <img 
           className="w-full h-full object-cover" 
-          src="https://picsum.photos/seed/mti-hero-cinematic-spices/1920/1080" 
-          alt="Cinematic spice grinding"
+          src="https://picsum.photos/seed/mti-heritage-spices/1920/1080" 
+          alt="Cinematic traditional spice grinding"
           referrerPolicy="no-referrer"
         />
-        <div className="absolute inset-0 bg-primary/30 mix-blend-multiply" />
-        <div className="absolute inset-0 bg-gradient-to-t from-on-surface via-on-surface/40 to-transparent" />
+        <div className="absolute inset-0 bg-primary/40 mix-blend-multiply" />
+        <div className="absolute inset-0 bg-gradient-to-t from-on-surface via-on-surface/60 to-transparent" />
       </div>
 
       <div className="relative z-10 px-6 md:px-12 max-w-screen-2xl mx-auto w-full">
         <div className="max-w-4xl">
           <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 4 }} // Wait for splash screen
           >
             <span className="text-surface-container-lowest font-manrope uppercase text-[10px] mb-8 block font-bold tracking-[0.4em]">
               Established in Indore
             </span>
             
-            <h1 className="font-noto-serif text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-surface-container-lowest tracking-tighter leading-[0.8] mb-10">
-              The Alchemy <br /> 
-              <span className="italic text-primary-fixed-dim">of Heritage.</span>
+            <h1 className="font-noto-serif text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-surface-container-lowest tracking-tighter leading-[0.8] mb-10 overflow-hidden">
+              {"Ground by a Father.".split(" ").map((word, i) => (
+                <motion.span
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ 
+                    duration: 1.2, 
+                    delay: 4.2 + (i * 0.2), 
+                    ease: [0.19, 1, 0.22, 1] 
+                  }}
+                  className="inline-block mr-4"
+                >
+                  {word}
+                </motion.span>
+              ))}
+              <br /> 
+              {"Guided by a Son.".split(" ").map((word, i) => (
+                <motion.span
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ 
+                    duration: 1.2, 
+                    delay: 4.8 + (i * 0.2), 
+                    ease: [0.19, 1, 0.22, 1] 
+                  }}
+                  className="inline-block mr-4 italic text-primary"
+                >
+                  {word}
+                </motion.span>
+              ))}
             </h1>
 
-            <p className="font-noto-serif italic text-surface-container-low text-2xl md:text-3xl mb-10 block max-w-2xl">
-              "शुद्धता ही हमारी पहचान है।"
-            </p>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.2, delay: 5.5, ease: [0.19, 1, 0.22, 1] }}
+              className="font-noto-serif italic text-surface-container-low text-2xl md:text-3xl mb-10 block max-w-2xl"
+            >
+              "Girr kar sambhalna hi asli mard ki pehchaan hai."
+            </motion.p>
 
-            <p className="font-manrope text-lg md:text-xl text-surface-container-lowest/70 max-w-2xl leading-relaxed mb-12">
-              In the heart of Madhya Pradesh, M.T.I preserves the true, pungent notes of Malwa through the ancient art of stone-grinding.
-            </p>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.2, delay: 5.8, ease: [0.19, 1, 0.22, 1] }}
+              className="font-manrope text-lg md:text-xl text-surface-container-lowest/70 max-w-2xl leading-relaxed mb-12"
+            >
+              In 1989, my father started M.T.I. After losing everything to debt, he is back at the stone-grinder. We don’t just sell spices; we sell the resilience of a man who refused to stay broken.
+            </motion.p>
             
-            <div className="flex flex-wrap gap-6">
-              <button className="bg-surface-container-lowest text-primary px-12 py-5 rounded-md font-manrope font-bold uppercase tracking-widest text-xs shadow-2xl hover:bg-primary hover:text-white transition-all">
-                Explore Catalog
-              </button>
-              <button className="border border-surface-container-lowest/30 text-surface-container-lowest px-12 py-5 rounded-md font-manrope font-bold uppercase tracking-widest text-xs hover:bg-surface-container-lowest/10 transition-all backdrop-blur-sm">
-                Our Story
-              </button>
-            </div>
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.2, delay: 6.2, ease: [0.19, 1, 0.22, 1] }}
+              className="flex flex-wrap gap-6"
+            >
+              <Magnetic strength={0.3}>
+                <button className="bg-surface-container-lowest text-primary px-12 py-5 rounded-md font-manrope font-bold uppercase tracking-widest text-xs shadow-2xl hover:bg-primary hover:text-white transition-all cursor-pointer">
+                  Explore Catalog
+                </button>
+              </Magnetic>
+              <Magnetic strength={0.3}>
+                <button className="border border-surface-container-lowest/30 text-surface-container-lowest px-12 py-5 rounded-md font-manrope font-bold uppercase tracking-widest text-xs hover:bg-surface-container-lowest/10 transition-all backdrop-blur-sm cursor-pointer">
+                  Our Story
+                </button>
+              </Magnetic>
+            </motion.div>
           </motion.div>
         </div>
       </div>

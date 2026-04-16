@@ -1,12 +1,14 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Hero from "../components/Hero";
-import Catalog from "../components/Catalog";
-import Process from "../components/Process";
+import SplashScreen from "../components/SplashScreen";
 import Story from "../components/Story";
+import Process from "../components/Process";
+import Catalog from "../components/Catalog";
 import Reviews from "../components/Reviews";
 import FAQs from "../components/FAQs";
 import Certifications from "../components/Certifications";
+import DraggableSeal from "../components/DraggableSeal";
 
 export default function HomePage() {
   const { hash } = useLocation();
@@ -22,14 +24,16 @@ export default function HomePage() {
   }, [hash]);
 
   return (
-    <div className="relative">
+    <div className="relative bg-surface">
+      <SplashScreen />
       <Hero />
-      <Catalog />
-      <Process />
       <Story />
+      <Process />
+      <Catalog />
       <Reviews />
       <FAQs />
       <Certifications />
+      <DraggableSeal />
     </div>
   );
 }

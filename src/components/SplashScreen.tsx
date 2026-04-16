@@ -1,5 +1,5 @@
+import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { useEffect, useState } from "react";
 
 export default function SplashScreen() {
   const [isVisible, setIsVisible] = useState(true);
@@ -7,7 +7,7 @@ export default function SplashScreen() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(false);
-    }, 3000);
+    }, 3500);
     return () => clearTimeout(timer);
   }, []);
 
@@ -15,43 +15,43 @@ export default function SplashScreen() {
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          initial={{ opacity: 1 }}
-          exit={{ opacity: 0, transition: { duration: 1, ease: "easeInOut" } }}
-          className="fixed inset-0 z-[100] bg-on-surface flex items-center justify-center overflow-hidden"
+          initial={{ y: 0 }}
+          exit={{ y: "-100%" }}
+          transition={{ duration: 1.2, ease: [0.19, 1, 0.22, 1], delay: 0.5 }}
+          className="fixed inset-0 z-[100] bg-[#121212] flex items-center justify-center overflow-hidden"
         >
-          {/* Cinematic Background with Ken Burns Effect */}
-          <div className="absolute inset-0 opacity-40">
-            <motion.img 
-              initial={{ scale: 1.2 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 3, ease: "linear" }}
-              src="https://picsum.photos/seed/mti-splash-cinematic/1920/1080" 
-              className="w-full h-full object-cover grayscale"
-              alt="Cinematic Spices"
-              referrerPolicy="no-referrer"
-            />
-            <div className="absolute inset-0 bg-primary/30 mix-blend-multiply" />
-          </div>
-
-          <div className="relative z-10 text-center">
+          <div className="relative z-10 text-center space-y-8">
             <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
+              initial={{ opacity: 0, filter: "blur(20px)" }}
+              animate={{ opacity: 1, filter: "blur(0px)" }}
               transition={{ duration: 1.5, ease: "easeOut" }}
-              className="space-y-6 px-6"
+              className="space-y-4"
             >
-              <h2 className="text-surface-container-lowest font-noto-serif text-4xl sm:text-5xl md:text-7xl tracking-[0.2em] italic">
+              <span className="font-manrope text-primary tracking-[0.8em] text-[10px] uppercase block font-bold">
+                Established 1989
+              </span>
+              <h2 className="font-noto-serif text-5xl md:text-7xl text-white tracking-[0.2em] font-bold">
                 M.T.I
               </h2>
-              <div className="h-[1px] w-24 bg-primary mx-auto" />
-              <p className="text-surface-container-lowest/60 font-manrope uppercase tracking-[0.5em] text-[10px]">
-                The Alchemy of Heritage
+            </motion.div>
+
+            <motion.div 
+              initial={{ width: 0 }}
+              animate={{ width: "120px" }}
+              transition={{ duration: 1.5, delay: 0.8, ease: "easeInOut" }}
+              className="h-px bg-primary/40 mx-auto"
+            />
+
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.2, delay: 1.5 }}
+            >
+              <p className="font-noto-serif italic text-white/40 text-sm tracking-widest">
+                The Resurrection of Purity
               </p>
             </motion.div>
           </div>
-
-          {/* Film Grain Overlay */}
-          <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
         </motion.div>
       )}
     </AnimatePresence>

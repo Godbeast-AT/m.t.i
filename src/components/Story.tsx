@@ -1,23 +1,30 @@
+import React from "react";
 import { motion } from "motion/react";
 
 export default function Story() {
   return (
-    <section id="our-story" className="bg-surface-container-low py-32">
-      <div className="px-6 md:px-12 max-w-screen-2xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-24 items-center">
-          <div className="order-2 md:order-1">
-            <div className="grid grid-cols-2 gap-6">
+    <section id="our-story" className="bg-surface py-24 overflow-hidden">
+      <div className="max-w-screen-2xl mx-auto px-6 md:px-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+          <motion.div 
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="relative"
+          >
+            <div className="grid grid-cols-2 gap-4">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
-                className="mt-12"
+                whileHover={{ scale: 1.02 }}
               >
                 <img 
-                  className="rounded-xl shadow-sm w-full aspect-square object-cover" 
-                  src="https://picsum.photos/seed/chilies/500/500" 
-                  alt="Dried red chilies"
+                  className="rounded-xl shadow-sm w-full aspect-square object-cover transition-transform duration-1000 group-hover:scale-105" 
+                  src="https://picsum.photos/seed/mti-old-factory/600/600" 
+                  alt="Traditional stone grinding setup"
                   referrerPolicy="no-referrer"
                 />
               </motion.div>
@@ -26,55 +33,89 @@ export default function Story() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.2 }}
+                whileHover={{ scale: 1.02 }}
                 className="mb-12"
               >
                 <img 
-                  className="rounded-xl shadow-sm w-full aspect-square object-cover" 
-                  src="https://picsum.photos/seed/turmeric/500/500" 
-                  alt="Artisanal hands mixing turmeric"
+                  className="rounded-xl shadow-sm w-full aspect-square object-cover transition-transform duration-1000 group-hover:scale-105" 
+                  src="https://picsum.photos/seed/mti-father-hands/600/600" 
+                  alt="Hands of a master craftsman"
                   referrerPolicy="no-referrer"
                 />
               </motion.div>
             </div>
-          </div>
-          
+            <div className="absolute -bottom-6 -right-6 bg-primary text-on-primary p-8 rounded-2xl hidden md:block shadow-xl">
+              <span className="font-noto-serif text-4xl italic block mb-1">1989</span>
+              <span className="font-manrope uppercase tracking-widest text-[10px] font-bold opacity-80">Heritage of Truth</span>
+            </div>
+          </motion.div>
+
           <motion.div 
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-            className="order-1 md:order-2 space-y-12"
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="space-y-8"
           >
             <div className="space-y-4">
-              <span className="font-noto-serif text-primary/60 italic text-2xl block">
-                "परम्परा और स्वाद का संगम।"
+              <span className="font-manrope uppercase tracking-[0.3em] text-[10px] text-primary font-bold block">
+                The Resurrection
               </span>
-              <h2 className="font-noto-serif text-6xl text-primary leading-tight tracking-tighter">
-                From Mandi to Global Pantry.
+              <h2 className="font-noto-serif text-4xl md:text-5xl lg:text-6xl text-on-surface leading-tight">
+                A Legacy Reclaimed from <br />
+                <span className="italic text-primary">the Ashes of 20 Lakhs.</span>
               </h2>
             </div>
-            <div className="font-manrope text-on-surface-variant space-y-6 leading-relaxed">
-              <p>
-                For three generations, Manish Thakur Industries has been the silent custodian of the Malwa region's culinary secrets. Our journey began not in a boardroom, but amidst the vibrant chaos of the local Mandi, where our founders hand-selected pods and seeds from farmers who shared our reverence for purity.
-              </p>
-              <p>
-                Today, M.T.I stands as a testament to that legacy. We have bridged the gap between ancient grinding techniques and modern safety standards, ensuring that every grain of spice that leaves our facility carries the authentic soul of Indore.
-              </p>
+
+            <div className="font-manrope text-on-surface-variant space-y-6 text-lg leading-relaxed">
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 1.2, ease: [0.19, 1, 0.22, 1] }}
+              >
+                My father, Manish Thakur, is a man whose kindness was often mistaken for weakness. In 1989, he built an empire of purity. But the world isn't always kind to honest men.
+              </motion.p>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 1.2, delay: 0.2, ease: [0.19, 1, 0.22, 1] }}
+              >
+                High interest, bad luck, and a mountain of 20-lakh debt forced him to shut his doors. When the factory lights went out, the "family" we trusted walked away. I watched him lose everything, but I never watched him lose his soul.
+              </motion.p>
+              <motion.p 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 1.5, delay: 0.4, ease: [0.19, 1, 0.22, 1] }}
+                className="font-noto-serif italic text-2xl text-on-surface border-l-4 border-primary pl-6 py-2"
+              >
+                "If I am going to be broke, I’d rather be broke selling the truth than get rich selling lies."
+              </motion.p>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 1.2, delay: 0.6, ease: [0.19, 1, 0.22, 1] }}
+              >
+                Today, we are back. Not as a corporation, but as a family. My father at the grinder, my mother ensuring every batch is sacred, and me—telling the world that the truth still has a taste.
+              </motion.p>
             </div>
-            
-            <div className="flex gap-12 pt-8">
-              {[
-                { label: "The Beginning", value: "1958" },
-                { label: "Spice Varieties", value: "42+" },
-                { label: "Countries", value: "12" }
-              ].map((stat) => (
-                <div key={stat.label} className="text-center">
-                  <span className="block font-noto-serif text-3xl text-primary">{stat.value}</span>
-                  <span className="text-[10px] uppercase tracking-widest font-manrope text-on-surface-variant font-bold">
-                    {stat.label}
-                  </span>
-                </div>
-              ))}
+
+            <div className="flex gap-12 pt-4">
+              <div className="space-y-1">
+                <span className="font-noto-serif text-3xl text-on-surface block">1989</span>
+                <span className="font-manrope uppercase tracking-widest text-[10px] text-on-surface-variant font-bold">Inception</span>
+              </div>
+              <div className="space-y-1">
+                <span className="font-noto-serif text-3xl text-on-surface block">20L</span>
+                <span className="font-manrope uppercase tracking-widest text-[10px] text-on-surface-variant font-bold">Debt Overcome</span>
+              </div>
+              <div className="space-y-1">
+                <span className="font-noto-serif text-3xl text-on-surface block">2</span>
+                <span className="font-manrope uppercase tracking-widest text-[10px] text-on-surface-variant font-bold">Father & Son</span>
+              </div>
             </div>
           </motion.div>
         </div>
