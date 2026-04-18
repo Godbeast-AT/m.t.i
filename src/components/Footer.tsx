@@ -21,6 +21,7 @@ export default function Footer() {
     {
       title: "Support",
       links: [
+        { name: "Track Your Order", path: "/track" },
         { name: "Contact Us", path: "/contact" },
         { name: "FAQs", path: "/#faqs" },
         { name: "Shipping Policy", onClick: () => setIsShippingOpen(true) },

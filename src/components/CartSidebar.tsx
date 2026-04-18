@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { X, ShoppingBag, Trash2, Plus, Minus } from "lucide-react";
+import { X, ShoppingBag, Trash2, Plus, Minus, CreditCard } from "lucide-react";
 import { useCart } from "../context/CartContext";
+
+declare global {
+  interface Window {
+    Razorpay: any;
+  }
+}
 
 export default function CartSidebar() {
   const { cart, isCartOpen, toggleCart, removeFromCart, updateQuantity, totalPrice, totalItems, checkoutUrl, isShopifyConnected } = useCart();
-  const [error, setError] = React.useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [isProcessing, setIsProcessing] = useState(false);
 
-  const handleCheckout = () => {
+  const handleShopifyCheckout = () => {
     setError(null);
     if (isShopifyConnected && checkoutUrl) {
       window.open(checkoutUrl, "_blank");
@@ -18,6 +25,75 @@ export default function CartSidebar() {
         setError("Checkout link not ready. Ensure products have valid Shopify Variant IDs.");
       }
       setTimeout(() => setError(null), 5000);
+    }
+  };
+
+  const handleRazorpayCheckout = async () => {
+    setError(null);
+    setIsProcessing(true);
+
+    try {
+      // 1. Create order on the server
+      const response = await fetch("/api/razorpay/order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          amount: totalPrice,
+          currency: "INR",
+          receipt: `receipt_${Date.now()}`,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!data.status) {
+        throw new Error(data.message || "Failed to create Razorpay order");
+      }
+
+      const { order } = data;
+
+      // 2. Initialize Razorpay Checkout
+      const options = {
+        key: (import.meta as any).env.VITE_RAZORPAY_KEY_ID,
+        amount: order.amount,
+        currency: order.currency,
+        name: "M.T.I - Heritage Spices",
+        description: "Artisanal Spice Purchase",
+        order_id: order.id,
+        handler: async (response: any) => {
+          // 3. Verify payment on the server
+          const verifyRes = await fetch("/api/razorpay/verify", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(response),
+          });
+
+          const verifyData = await verifyRes.json();
+          if (verifyData.status) {
+            alert("Payment successful! Order confirmed.");
+            // Clear cart logic could go here
+            toggleCart();
+          } else {
+            setError("Payment verification failed. Please contact support.");
+          }
+        },
+        prefill: {
+          name: "Customer Name",
+          email: "customer@example.com",
+          contact: "9999999999",
+        },
+        theme: {
+          color: "#6a0e00",
+        },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch (err: any) {
+      console.error("Razorpay Error:", err);
+      setError(err.message || "Failed to initiate payment. Check API credentials.");
+    } finally {
+      setIsProcessing(false);
     }
   };
 
@@ -139,12 +215,25 @@ export default function CartSidebar() {
                   <span className="font-manrope uppercase tracking-widest text-[10px] font-bold text-on-surface-variant">Subtotal</span>
                   <span className="font-manrope text-2xl font-bold text-on-surface">₹{totalPrice}</span>
                 </div>
-                <button 
-                  onClick={handleCheckout}
-                  className="w-full bg-primary text-on-primary py-4 rounded-md font-manrope font-bold uppercase tracking-widest text-xs shadow-xl hover:bg-primary/90 transition-all cursor-pointer"
-                >
-                  {isShopifyConnected ? "Checkout on Shopify" : "Checkout Now"}
-                </button>
+                
+                <div className="space-y-3">
+                  <button 
+                    onClick={handleRazorpayCheckout}
+                    disabled={isProcessing}
+                    className="w-full bg-primary text-on-primary py-4 rounded-md font-manrope font-bold uppercase tracking-widest text-xs shadow-xl hover:bg-primary/90 transition-all cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50"
+                  >
+                    <CreditCard size={14} />
+                    {isProcessing ? "Processing..." : "Pay Now (Razorpay)"}
+                  </button>
+
+                  <button 
+                    onClick={handleShopifyCheckout}
+                    className="w-full border border-outline-variant text-on-surface py-4 rounded-md font-manrope font-bold uppercase tracking-widest text-[10px] shadow-sm hover:bg-surface-container transition-all cursor-pointer"
+                  >
+                    Checkout on Shopify
+                  </button>
+                </div>
+
                 <p className="text-[8px] text-center text-on-surface-variant uppercase tracking-[0.2em]">
                   Free shipping on orders above ₹999
                 </p>

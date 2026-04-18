@@ -5,6 +5,7 @@ import { ArrowLeft, ShoppingBag, CheckCircle2, Plus, Minus } from "lucide-react"
 import { products } from "../constants/products";
 import Magnetic from "../components/Magnetic";
 import { useCart } from "../context/CartContext";
+import PincodeChecker from "../components/PincodeChecker";
 
 export default function ProductDetailsPage() {
   const { id } = useParams<{ id: string }>();
@@ -12,6 +13,7 @@ export default function ProductDetailsPage() {
   const [activeImage, setActiveImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [isBuying, setIsBuying] = useState(false);
   const { addToCart } = useCart();
 
   useEffect(() => {
@@ -23,6 +25,68 @@ export default function ProductDetailsPage() {
       addToCart(product, quantity);
       setShowConfirmation(true);
       setTimeout(() => setShowConfirmation(false), 3000);
+    }
+  };
+
+  const handleBuyNow = async () => {
+    if (!product) return;
+    setIsBuying(true);
+    
+    try {
+      const numericPrice = parseInt(product.price.replace(/[^0-9]/g, ""));
+      const totalAmount = numericPrice * quantity;
+
+      const response = await fetch("/api/razorpay/order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          amount: totalAmount,
+          currency: "INR",
+          receipt: `direct_${product.id}_${Date.now()}`,
+        }),
+      });
+
+      const data = await response.json();
+      if (!data.status) throw new Error(data.message || "Failed to create order");
+
+      const options = {
+        key: (import.meta as any).env.VITE_RAZORPAY_KEY_ID,
+        amount: data.order.amount,
+        currency: data.order.currency,
+        name: "M.T.I - Heritage Spices",
+        description: `Purchase: ${product.name}`,
+        order_id: data.order.id,
+        handler: async (response: any) => {
+          const verifyRes = await fetch("/api/razorpay/verify", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(response),
+          });
+
+          const verifyData = await verifyRes.json();
+          if (verifyData.status) {
+            alert("Order placed successfully! We'll begin grinding your spices immediately.");
+          } else {
+            alert("Verification failed. Please contact us.");
+          }
+        },
+        prefill: {
+          name: "Customer Name",
+          email: "customer@example.com",
+          contact: "9999999999",
+        },
+        theme: {
+          color: "#6a0e00",
+        },
+      };
+
+      const rzp = new (window as any).Razorpay(options);
+      rzp.open();
+    } catch (err: any) {
+      console.error(err);
+      alert(err.message || "Unable to process payment at this time.");
+    } finally {
+      setIsBuying(false);
     }
   };
 
@@ -143,6 +207,16 @@ export default function ProductDetailsPage() {
               ))}
             </motion.div>
 
+            {/* Pincode Checker (NimbusPost Integration) */}
+            <motion.div
+               initial={{ opacity: 0, y: 30 }}
+               animate={{ opacity: 1, y: 0 }}
+               transition={{ duration: 0.8, delay: 0.25, ease: [0.19, 1, 0.22, 1] }}
+               className="max-w-xl"
+            >
+              <PincodeChecker />
+            </motion.div>
+
             {/* Quantity Selector */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -187,9 +261,11 @@ export default function ProductDetailsPage() {
               </button>
               <button 
                 type="button"
-                className="border border-outline-variant text-on-surface px-12 py-5 rounded-md font-manrope font-bold uppercase tracking-widest text-xs hover:bg-surface-container transition-all cursor-pointer"
+                onClick={handleBuyNow}
+                disabled={isBuying}
+                className="border border-outline-variant text-on-surface px-12 py-5 rounded-md font-manrope font-bold uppercase tracking-widest text-xs hover:bg-surface-container transition-all cursor-pointer disabled:opacity-50"
               >
-                Buy Now
+                {isBuying ? "Processing..." : "Buy Now"}
               </button>
 
               <AnimatePresence>
