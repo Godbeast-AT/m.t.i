@@ -3,7 +3,14 @@ import { motion } from "motion/react";
 
 export default function Story() {
   return (
-    <section id="our-story" className="bg-surface py-24 overflow-hidden">
+    <section id="our-story" className="bg-surface py-32 overflow-hidden relative">
+      {/* Brand Rail (Recipe 12) */}
+      <div className="absolute left-4 top-1/2 -translate-y-1/2 hidden xl:block pointer-events-none">
+        <span className="font-manrope text-[10px] uppercase tracking-[1em] text-primary/20 [writing-mode:vertical-lr] font-bold">
+          MANISH THAKUR INDUSTRIES • SINCE 1989
+        </span>
+      </div>
+
       <div className="max-w-screen-2xl mx-auto px-6 md:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
           <motion.div 

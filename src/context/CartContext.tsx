@@ -1,5 +1,17 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import Client from "shopify-buy";
 import { Product } from "../constants/products";
+
+// Initialize Shopify Client
+const shopifyDomain = ((import.meta as any).env.VITE_SHOPIFY_STORE_DOMAIN || "your-store.myshopify.com")
+  .replace(/^https?:\/\//, "")
+  .replace(/\/$/, "");
+
+const shopifyClient = Client.buildClient({
+  domain: shopifyDomain,
+  storefrontAccessToken: (import.meta as any).env.VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN || "",
+  apiVersion: "2023-10", // Use a stable version
+});
 
 interface CartItem extends Product {
   quantity: number;
@@ -15,19 +27,101 @@ interface CartContextType {
   totalPrice: number;
   isCartOpen: boolean;
   toggleCart: () => void;
+  checkoutUrl: string | null;
+  isShopifyConnected: boolean;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>(() => {
-    const savedCart = localStorage.getItem("mti_cart");
-    return savedCart ? JSON.parse(savedCart) : [];
+    try {
+      const savedCart = localStorage.getItem("mti_cart");
+      return savedCart ? JSON.parse(savedCart) : [];
+    } catch (e) {
+      console.error("Failed to parse cart from localStorage", e);
+      return [];
+    }
   });
 
+  const [checkoutId, setCheckoutId] = useState<string | null>(() => {
+    try {
+      return localStorage.getItem("shopify_checkout_id");
+    } catch (e) {
+      return null;
+    }
+  });
+
+  const [checkoutUrl, setCheckoutUrl] = useState<string | null>(null);
+  const isShopifyConnected = !!((import.meta as any).env.VITE_SHOPIFY_STORE_DOMAIN && (import.meta as any).env.VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN);
+
+  // Sync with Shopify Checkout
+  const syncWithShopify = useCallback(async (currentCart: CartItem[]) => {
+    if (!isShopifyConnected) return;
+
+    // Filter out items without proper variant IDs (ignoring the placeholder '123456789')
+    const lineItemsToAdd = currentCart
+      .filter(item => item.shopifyVariantId && !item.shopifyVariantId.includes("123456789"))
+      .map(item => ({
+        variantId: item.shopifyVariantId!,
+        quantity: item.quantity,
+      }));
+
+    if (lineItemsToAdd.length === 0) {
+      setCheckoutUrl(null);
+      return;
+    }
+
+    try {
+      let checkout: any;
+      
+      // Attempt to use existing checkout
+      if (checkoutId) {
+        try {
+          checkout = await shopifyClient.checkout.fetch(checkoutId);
+          // If checkout is already completed or invalid, we'll create a new one
+          if (!checkout || checkout.completedAt) {
+            checkout = await shopifyClient.checkout.create({ lineItems: lineItemsToAdd });
+          } else {
+            // Update line items: we replace them to ensure sync
+            const existingLineItemIds = checkout.lineItems.map((li: any) => li.id);
+            if (existingLineItemIds.length > 0) {
+              await shopifyClient.checkout.removeLineItems(checkoutId, existingLineItemIds);
+            }
+            checkout = await shopifyClient.checkout.addLineItems(checkoutId, lineItemsToAdd);
+          }
+        } catch (fetchError) {
+          checkout = await shopifyClient.checkout.create({ lineItems: lineItemsToAdd });
+        }
+      } else {
+        checkout = await shopifyClient.checkout.create({ lineItems: lineItemsToAdd });
+      }
+
+      if (checkout) {
+        setCheckoutId(checkout.id);
+        localStorage.setItem("shopify_checkout_id", checkout.id);
+        setCheckoutUrl(checkout.webUrl);
+      }
+    } catch (error: any) {
+      console.error("Shopify Sync Details:", {
+        message: error.message,
+        errors: error.errors
+      });
+      setCheckoutUrl(null);
+    }
+  }, [isShopifyConnected, checkoutId]);
+
+  // Debounced Sync
   useEffect(() => {
     localStorage.setItem("mti_cart", JSON.stringify(cart));
-  }, [cart]);
+    
+    if (isShopifyConnected) {
+      const timeoutId = setTimeout(() => {
+        syncWithShopify(cart);
+      }, 1000); // 1-second debounce
+      return () => clearTimeout(timeoutId);
+    }
+  }, [cart, isShopifyConnected, syncWithShopify]);
 
   const [isCartOpen, setIsCartOpen] = useState(false);
 
@@ -45,7 +139,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       }
       return [...prevCart, { ...product, quantity }];
     });
-    setIsCartOpen(true); // Open cart when item is added
+    setIsCartOpen(true);
   };
 
   const removeFromCart = (productId: string) => {
@@ -81,7 +175,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       totalItems, 
       totalPrice,
       isCartOpen,
-      toggleCart
+      toggleCart,
+      checkoutUrl: isShopifyConnected ? checkoutUrl : null,
+      isShopifyConnected
     }}>
       {children}
     </CartContext.Provider>

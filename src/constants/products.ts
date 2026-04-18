@@ -9,6 +9,7 @@ export interface Product {
   tag: string;
   description: string;
   benefits: string[];
+  shopifyVariantId?: string; // Add this for Shopify integration
 }
 
 export const products: Product[] = [
@@ -27,7 +28,8 @@ export const products: Product[] = [
     ],
     tag: "The Fire",
     description: "Our chili powder is not just a spice; it's a testament to purity. Ground slowly on traditional stone mills (chakkis) to preserve the natural oils and vibrant color. Unlike commercial brands, we add zero fillers, zero artificial colors, and zero wood dust. Just pure, sun-dried chilies that pack a punch of authentic flavor.",
-    benefits: ["100% Pure & Natural", "No Artificial Colors", "Slow Stone Ground", "Rich in Capsaicin"]
+    benefits: ["100% Pure & Natural", "No Artificial Colors", "Slow Stone Ground", "Rich in Capsaicin"],
+    shopifyVariantId: "gid://shopify/ProductVariant/123456789" // Example Shopify GID
   },
   {
     id: "turmeric-powder",
@@ -43,7 +45,8 @@ export const products: Product[] = [
     ],
     tag: "Authentic",
     description: "Experience the golden essence of health. Our turmeric is sourced from the finest roots and ground at low temperatures to retain its high curcumin content. It's the same turmeric my father started with in 1989—unadulterated, earthy, and deeply healing.",
-    benefits: ["High Curcumin Content", "Anti-inflammatory Properties", "Traditional Grinding", "Zero Adulteration"]
+    benefits: ["High Curcumin Content", "Anti-inflammatory Properties", "Traditional Grinding", "Zero Adulteration"],
+    shopifyVariantId: "gid://shopify/ProductVariant/223456789"
   },
   {
     id: "coriander-powder",

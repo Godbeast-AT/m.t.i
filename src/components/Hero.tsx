@@ -18,14 +18,16 @@ export default function Hero() {
     <section ref={containerRef} className="relative h-screen w-full overflow-hidden flex items-center bg-on-surface">
       {/* Cinematic Background */}
       <div className="absolute inset-0 z-0">
-        <img 
+        <motion.img 
+          style={{ scale }}
           className="w-full h-full object-cover" 
           src="https://picsum.photos/seed/mti-heritage-spices/1920/1080" 
           alt="Cinematic traditional spice grinding"
           referrerPolicy="no-referrer"
         />
-        <div className="absolute inset-0 bg-primary/40 mix-blend-multiply" />
-        <div className="absolute inset-0 bg-gradient-to-t from-on-surface via-on-surface/60 to-transparent" />
+        <div className="absolute inset-0 bg-primary/30 mix-blend-multiply" />
+        <div className="absolute inset-0 bg-gradient-to-r from-on-surface via-on-surface/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-on-surface via-transparent to-on-surface/20" />
       </div>
 
       <div className="relative z-10 px-6 md:px-12 max-w-screen-2xl mx-auto w-full">

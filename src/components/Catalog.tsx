@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo, memo } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Link } from "react-router-dom";
 
@@ -16,20 +16,78 @@ const filters = [
   { label: "Authentic", value: "Authentic" }
 ];
 
+const ProductCard = memo(({ product, onQuickAdd }: { product: Product; onQuickAdd: (e: React.MouseEvent, p: Product) => void }) => {
+  return (
+    <Magnetic strength={0.1}>
+      <Link to={`/product/${product.id}`}>
+        <motion.div 
+          layout
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.9 }}
+          transition={{ duration: 0.5, ease: [0.19, 1, 0.22, 1] }}
+          whileHover={{ y: -10 }}
+          className="group bg-surface-container-lowest rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all border border-outline-variant/10 h-full"
+        >
+          <div className="aspect-[4/5] overflow-hidden relative bg-surface-container">
+            <motion.img 
+              initial={{ scale: 1.1 }}
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
+              src={product.images[0]} 
+              alt={product.name} 
+              loading="lazy"
+              className="w-full h-full object-cover"
+              referrerPolicy="no-referrer"
+            />
+            <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full shadow-sm">
+              <span className="font-manrope text-[10px] font-bold text-primary uppercase tracking-widest">{product.tag}</span>
+            </div>
+          </div>
+          <div className="p-6 space-y-4">
+            <div className="space-y-1">
+              <h3 className="font-noto-serif text-xl text-on-surface">{product.name}</h3>
+              <span className="font-noto-serif italic text-on-surface-variant text-sm">"{product.hindi}"</span>
+            </div>
+            <div className="flex justify-between items-center pt-2">
+              <div className="flex flex-col">
+                <span className="font-manrope text-2xl font-bold text-on-surface">{product.price}</span>
+                <span className="font-manrope text-[10px] text-on-surface-variant uppercase tracking-widest">{product.weight}</span>
+              </div>
+              <button 
+                type="button"
+                onClick={(e) => onQuickAdd(e, product)}
+                className="bg-surface-container text-on-surface p-3 rounded-full group-hover:bg-primary group-hover:text-on-primary transition-all cursor-pointer"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </button>
+            </div>
+          </div>
+        </motion.div>
+      </Link>
+    </Magnetic>
+  );
+});
+
+ProductCard.displayName = "ProductCard";
+
 export default function Catalog() {
   const [activeFilter, setActiveFilter] = useState("all");
   const { addToCart } = useCart();
 
-  const handleQuickAdd = (e: React.MouseEvent, product: Product) => {
+  const handleQuickAdd = React.useCallback((e: React.MouseEvent, product: Product) => {
     e.preventDefault();
     e.stopPropagation();
     addToCart(product, 1);
-  };
+  }, [addToCart]);
 
-  const filteredProducts = products.filter(product => {
-    if (activeFilter === "all") return true;
-    return product.type === activeFilter || product.tag === activeFilter;
-  });
+  const filteredProducts = useMemo(() => {
+    return products.filter(product => {
+      if (activeFilter === "all") return true;
+      return product.type === activeFilter || product.tag === activeFilter;
+    });
+  }, [activeFilter]);
 
   return (
     <section id="catalog" className="py-24 bg-surface">
@@ -48,6 +106,7 @@ export default function Catalog() {
             {filters.map((filter) => (
               <button
                 key={filter.value}
+                type="button"
                 onClick={() => setActiveFilter(filter.value)}
                 className={`px-6 py-2 rounded-full font-manrope uppercase tracking-widest text-[10px] font-bold transition-all cursor-pointer border ${
                   activeFilter === filter.value
@@ -66,54 +125,12 @@ export default function Catalog() {
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
         >
           <AnimatePresence mode="popLayout">
-            {filteredProducts.map((product, index) => (
-              <Magnetic key={product.id} strength={0.1}>
-                <Link to={`/product/${product.id}`}>
-                  <motion.div 
-                    layout
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    transition={{ duration: 0.5, ease: [0.19, 1, 0.22, 1] }}
-                    whileHover={{ y: -10 }}
-                    className="group bg-surface-container-lowest rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all border border-outline-variant/10 h-full"
-                  >
-                    <div className="aspect-[4/5] overflow-hidden relative">
-                      <motion.img 
-                        initial={{ scale: 1.1 }}
-                        whileHover={{ scale: 1.05 }}
-                        transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
-                        src={product.images[0]} 
-                        alt={product.name} 
-                        className="w-full h-full object-cover"
-                        referrerPolicy="no-referrer"
-                      />
-                      <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full shadow-sm">
-                        <span className="font-manrope text-[10px] font-bold text-primary uppercase tracking-widest">{product.tag}</span>
-                      </div>
-                    </div>
-                    <div className="p-6 space-y-4">
-                      <div className="space-y-1">
-                        <h3 className="font-noto-serif text-xl text-on-surface">{product.name}</h3>
-                        <span className="font-noto-serif italic text-on-surface-variant text-sm">"{product.hindi}"</span>
-                      </div>
-                      <div className="flex justify-between items-center pt-2">
-                        <div className="flex flex-col">
-                          <span className="font-manrope text-2xl font-bold text-on-surface">{product.price}</span>
-                          <span className="font-manrope text-[10px] text-on-surface-variant uppercase tracking-widest">{product.weight}</span>
-                        </div>
-                        <button 
-                          onClick={(e) => handleQuickAdd(e, product)}
-                          className="bg-surface-container text-on-surface p-3 rounded-full group-hover:bg-primary group-hover:text-on-primary transition-all cursor-pointer"
-                        >
-                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                        </button>
-                      </div>
-                    </div>
-                  </motion.div>
-                </Link>
-              </Magnetic>
+            {filteredProducts.map((product) => (
+              <ProductCard 
+                key={product.id} 
+                product={product} 
+                onQuickAdd={handleQuickAdd} 
+              />
             ))}
           </AnimatePresence>
         </motion.div>

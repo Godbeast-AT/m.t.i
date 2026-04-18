@@ -4,7 +4,22 @@ import { X, ShoppingBag, Trash2, Plus, Minus } from "lucide-react";
 import { useCart } from "../context/CartContext";
 
 export default function CartSidebar() {
-  const { cart, isCartOpen, toggleCart, removeFromCart, updateQuantity, totalPrice, totalItems } = useCart();
+  const { cart, isCartOpen, toggleCart, removeFromCart, updateQuantity, totalPrice, totalItems, checkoutUrl, isShopifyConnected } = useCart();
+  const [error, setError] = React.useState<string | null>(null);
+
+  const handleCheckout = () => {
+    setError(null);
+    if (isShopifyConnected && checkoutUrl) {
+      window.open(checkoutUrl, "_blank");
+    } else {
+      if (!isShopifyConnected) {
+        setError("Shopify credentials not found. Check .env settings.");
+      } else if (!checkoutUrl) {
+        setError("Checkout link not ready. Ensure products have valid Shopify Variant IDs.");
+      }
+      setTimeout(() => setError(null), 5000);
+    }
+  };
 
   return (
     <AnimatePresence>
@@ -93,13 +108,42 @@ export default function CartSidebar() {
 
             {/* Footer */}
             {cart.length > 0 && (
-              <div className="p-6 border-t border-outline-variant/10 space-y-6 bg-surface-container-lowest">
+              <div className="p-6 border-t border-outline-variant/10 space-y-4 bg-surface-container-lowest">
+                {/* Free Shipping Indicator */}
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center text-[9px] font-bold uppercase tracking-widest font-manrope">
+                    <span className={totalPrice >= 999 ? "text-primary" : "text-on-surface-variant"}>
+                      {totalPrice >= 999 ? "Free Shipping Unlocked" : `Add ₹${999 - totalPrice} for Free Shipping`}
+                    </span>
+                    <span className="text-on-surface-variant">Limit ₹999</span>
+                  </div>
+                  <div className="h-1 w-full bg-surface-container rounded-full overflow-hidden">
+                    <motion.div 
+                      initial={{ width: 0 }}
+                      animate={{ width: `${Math.min(100, (totalPrice / 999) * 100)}%` }}
+                      className="h-full bg-primary"
+                    />
+                  </div>
+                </div>
+
+                {error && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="p-3 bg-error-container text-on-error-container text-[10px] rounded-md font-bold uppercase tracking-widest text-center"
+                  >
+                    {error}
+                  </motion.div>
+                )}
                 <div className="flex justify-between items-end">
                   <span className="font-manrope uppercase tracking-widest text-[10px] font-bold text-on-surface-variant">Subtotal</span>
                   <span className="font-manrope text-2xl font-bold text-on-surface">₹{totalPrice}</span>
                 </div>
-                <button className="w-full bg-primary text-on-primary py-4 rounded-md font-manrope font-bold uppercase tracking-widest text-xs shadow-xl hover:bg-primary/90 transition-all cursor-pointer">
-                  Checkout Now
+                <button 
+                  onClick={handleCheckout}
+                  className="w-full bg-primary text-on-primary py-4 rounded-md font-manrope font-bold uppercase tracking-widest text-xs shadow-xl hover:bg-primary/90 transition-all cursor-pointer"
+                >
+                  {isShopifyConnected ? "Checkout on Shopify" : "Checkout Now"}
                 </button>
                 <p className="text-[8px] text-center text-on-surface-variant uppercase tracking-[0.2em]">
                   Free shipping on orders above ₹999

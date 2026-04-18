@@ -24,46 +24,65 @@ const steps = [
 
 export default function Process() {
   return (
-    <section id="our-process" className="bg-surface-container py-24">
+    <section id="our-process" className="bg-surface py-32 overflow-hidden">
       <div className="max-w-screen-2xl mx-auto px-6 md:px-12">
-        <div className="text-center mb-20 space-y-4">
+        <div className="max-w-3xl mb-32 space-y-4">
           <span className="font-manrope uppercase tracking-[0.3em] text-[10px] text-primary font-bold block">
             The M.T.I. Standard
           </span>
-          <h2 className="font-noto-serif text-4xl md:text-5xl text-on-surface">Grinding Honesty, <span className="italic">Not Just Spices.</span></h2>
+          <h2 className="font-noto-serif text-5xl md:text-6xl text-on-surface leading-tight">
+            Grinding Honesty, <br />
+            <span className="italic">Not Just Spices.</span>
+          </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="space-y-40">
           {steps.map((step, index) => (
             <motion.div 
               key={step.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
-              className="bg-surface-container-lowest rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all group"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 1 }}
+              className={`flex flex-col lg:flex-row items-center gap-16 lg:gap-32 ${
+                index % 2 === 1 ? "lg:flex-row-reverse" : ""
+              }`}
             >
-              <div className="aspect-video overflow-hidden relative">
-                <motion.img 
-                  initial={{ scale: 1.2 }}
-                  whileInView={{ scale: 1 }}
-                  viewport={{ once: false }}
-                  transition={{ duration: 1.5, ease: [0.19, 1, 0.22, 1] }}
-                  src={step.image} 
-                  alt={step.title} 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </div>
-              <div className="p-8 space-y-4">
-                <div className="flex justify-between items-center">
-                  <h3 className="font-noto-serif text-xl text-on-surface">{step.title}</h3>
-                  <span className="font-noto-serif italic text-primary text-sm">{step.hindi}</span>
+              {/* Image with Decorative Number */}
+              <div className="relative w-full lg:w-1/2">
+                <span className="absolute -top-12 -left-8 lg:-top-20 lg:-left-16 font-noto-serif font-black text-[120px] lg:text-[200px] text-primary/5 leading-none select-none z-0">
+                  0{index + 1}
+                </span>
+                <motion.div 
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
+                  className="relative z-10 aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-outline-variant/10"
+                >
+                  <img 
+                    src={step.image} 
+                    alt={step.title} 
+                    loading="lazy"
+                    className="w-full h-full object-cover"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute inset-0 bg-primary/5 mix-blend-multiply" />
+                </motion.div>
+                <div className={`absolute -bottom-8 ${index % 2 === 1 ? "-left-8" : "-right-8"} bg-surface-container-lowest p-6 rounded-2xl shadow-xl hidden lg:block border border-outline-variant/10`}>
+                  <span className="font-noto-serif italic text-primary text-xl px-4">{step.hindi}</span>
                 </div>
-                <p className="font-manrope text-on-surface-variant leading-relaxed">
+              </div>
+
+              {/* Text Content */}
+              <div className="w-full lg:w-1/2 space-y-6">
+                <h3 className="font-noto-serif text-3xl md:text-4xl text-on-surface">
+                  {step.title}
+                </h3>
+                <p className="font-manrope text-on-surface-variant text-lg md:text-xl leading-relaxed max-w-xl">
                   {step.description}
                 </p>
+                <div className="pt-6">
+                  <div className="h-px w-20 bg-primary/30" />
+                </div>
               </div>
             </motion.div>
           ))}
