@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import { ArrowLeft, ShoppingBag, CheckCircle2, Plus, Minus } from "lucide-react";
@@ -6,6 +6,12 @@ import { products } from "../constants/products";
 import Magnetic from "../components/Magnetic";
 import { useCart } from "../context/CartContext";
 import PincodeChecker from "../components/PincodeChecker";
+
+declare global {
+  interface Window {
+    Razorpay?: new (options: Record<string, unknown>) => { open: () => void };
+  }
+}
 
 export default function ProductDetailsPage() {
   const { id } = useParams<{ id: string }>();
@@ -15,16 +21,27 @@ export default function ProductDetailsPage() {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [isBuying, setIsBuying] = useState(false);
   const { addToCart } = useCart();
+  const hasImages = product ? product.images.length > 0 : false;
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
+  useEffect(() => {
+    setActiveImage(0);
+    setQuantity(1);
+  }, [id]);
+
+  useEffect(() => {
+    if (!showConfirmation) return;
+    const timeout = window.setTimeout(() => setShowConfirmation(false), 3000);
+    return () => window.clearTimeout(timeout);
+  }, [showConfirmation]);
+
   const handleAddToCart = () => {
     if (product) {
       addToCart(product, quantity);
       setShowConfirmation(true);
-      setTimeout(() => setShowConfirmation(false), 3000);
     }
   };
 
@@ -48,6 +65,10 @@ export default function ProductDetailsPage() {
 
       const data = await response.json();
       if (!data.status) throw new Error(data.message || "Failed to create order");
+
+      if (!window.Razorpay) {
+        throw new Error("Razorpay SDK is not loaded. Please refresh and try again.");
+      }
 
       const options = {
         key: (import.meta as any).env.VITE_RAZORPAY_KEY_ID,
@@ -80,7 +101,7 @@ export default function ProductDetailsPage() {
         },
       };
 
-      const rzp = new (window as any).Razorpay(options);
+      const rzp = new window.Razorpay(options);
       rzp.open();
     } catch (err: any) {
       console.error(err);
@@ -131,34 +152,45 @@ export default function ProductDetailsPage() {
               transition={{ duration: 1, ease: [0.19, 1, 0.22, 1] }}
               className="aspect-[4/5] rounded-3xl overflow-hidden bg-surface-container-lowest border border-outline-variant/10"
             >
-              <AnimatePresence mode="wait">
-                <motion.img
-                  key={activeImage}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.5 }}
-                  src={product.images[activeImage]}
-                  alt={product.name}
-                  className="w-full h-full object-cover"
-                  referrerPolicy="no-referrer"
-                />
-              </AnimatePresence>
+              {hasImages ? (
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={activeImage}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                    src={product.images[activeImage]}
+                    alt={product.name}
+                    className="w-full h-full object-cover"
+                    referrerPolicy="no-referrer"
+                  />
+                </AnimatePresence>
+              ) : (
+                <div className="w-full h-full bg-gradient-to-br from-surface-container via-surface-container-lowest to-primary/10 flex items-center justify-center px-10 text-center">
+                  <div>
+                    <span className="block font-noto-serif text-3xl text-on-surface mb-3">{product.name}</span>
+                    <span className="font-manrope text-[10px] uppercase tracking-[0.3em] text-on-surface-variant">Photo coming soon</span>
+                  </div>
+                </div>
+              )}
             </motion.div>
             
-            <div className="grid grid-cols-4 gap-4">
-              {product.images.map((img, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setActiveImage(idx)}
+            {hasImages && (
+              <div className="grid grid-cols-4 gap-4">
+                {product.images.map((img, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setActiveImage(idx)}
                   className={`aspect-square rounded-xl overflow-hidden border-2 transition-all ${
                     activeImage === idx ? "border-primary scale-95" : "border-transparent opacity-60 hover:opacity-100"
                   }`}
                 >
                   <img src={img} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
-                </button>
-              ))}
-            </div>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Product Info */}
@@ -309,3 +341,4 @@ export default function ProductDetailsPage() {
     </div>
   );
 }
+

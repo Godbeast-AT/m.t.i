@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { X, ShoppingBag, Trash2, Plus, Minus, CreditCard } from "lucide-react";
 import { useCart } from "../context/CartContext";
 
 declare global {
   interface Window {
-    Razorpay: any;
+    Razorpay?: new (options: Record<string, unknown>) => { open: () => void };
   }
 }
 
@@ -24,7 +24,7 @@ export default function CartSidebar() {
       } else if (!checkoutUrl) {
         setError("Checkout link not ready. Ensure products have valid Shopify Variant IDs.");
       }
-      setTimeout(() => setError(null), 5000);
+      window.setTimeout(() => setError(null), 5000);
     }
   };
 
@@ -33,7 +33,6 @@ export default function CartSidebar() {
     setIsProcessing(true);
 
     try {
-      // 1. Create order on the server
       const response = await fetch("/api/razorpay/order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -52,7 +51,10 @@ export default function CartSidebar() {
 
       const { order } = data;
 
-      // 2. Initialize Razorpay Checkout
+      if (!window.Razorpay) {
+        throw new Error("Razorpay SDK is not loaded. Please refresh and try again.");
+      }
+
       const options = {
         key: (import.meta as any).env.VITE_RAZORPAY_KEY_ID,
         amount: order.amount,
@@ -61,7 +63,6 @@ export default function CartSidebar() {
         description: "Artisanal Spice Purchase",
         order_id: order.id,
         handler: async (response: any) => {
-          // 3. Verify payment on the server
           const verifyRes = await fetch("/api/razorpay/verify", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -71,7 +72,6 @@ export default function CartSidebar() {
           const verifyData = await verifyRes.json();
           if (verifyData.status) {
             alert("Payment successful! Order confirmed.");
-            // Clear cart logic could go here
             toggleCart();
           } else {
             setError("Payment verification failed. Please contact support.");
@@ -101,7 +101,6 @@ export default function CartSidebar() {
     <AnimatePresence>
       {isCartOpen && (
         <>
-          {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -110,7 +109,6 @@ export default function CartSidebar() {
             className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[100]"
           />
 
-          {/* Sidebar */}
           <motion.div
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
@@ -118,7 +116,6 @@ export default function CartSidebar() {
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
             className="fixed right-0 top-0 h-full w-full max-w-md bg-surface shadow-2xl z-[101] flex flex-col"
           >
-            {/* Header */}
             <div className="p-6 border-b border-outline-variant/10 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <ShoppingBag size={20} className="text-primary" />
@@ -132,7 +129,6 @@ export default function CartSidebar() {
               </button>
             </div>
 
-            {/* Items List */}
             <div className="flex-1 overflow-y-auto p-6 space-y-6">
               {cart.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center space-y-4 opacity-40">
@@ -182,10 +178,8 @@ export default function CartSidebar() {
               )}
             </div>
 
-            {/* Footer */}
             {cart.length > 0 && (
               <div className="p-6 border-t border-outline-variant/10 space-y-4 bg-surface-container-lowest">
-                {/* Free Shipping Indicator */}
                 <div className="space-y-2">
                   <div className="flex justify-between items-center text-[9px] font-bold uppercase tracking-widest font-manrope">
                     <span className={totalPrice >= 999 ? "text-primary" : "text-on-surface-variant"}>
@@ -194,7 +188,7 @@ export default function CartSidebar() {
                     <span className="text-on-surface-variant">Limit ₹999</span>
                   </div>
                   <div className="h-1 w-full bg-surface-container rounded-full overflow-hidden">
-                    <motion.div 
+                    <motion.div
                       initial={{ width: 0 }}
                       animate={{ width: `${Math.min(100, (totalPrice / 999) * 100)}%` }}
                       className="h-full bg-primary"
@@ -203,7 +197,7 @@ export default function CartSidebar() {
                 </div>
 
                 {error && (
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="p-3 bg-error-container text-on-error-container text-[10px] rounded-md font-bold uppercase tracking-widest text-center"
@@ -215,9 +209,9 @@ export default function CartSidebar() {
                   <span className="font-manrope uppercase tracking-widest text-[10px] font-bold text-on-surface-variant">Subtotal</span>
                   <span className="font-manrope text-2xl font-bold text-on-surface">₹{totalPrice}</span>
                 </div>
-                
+
                 <div className="space-y-3">
-                  <button 
+                  <button
                     onClick={handleRazorpayCheckout}
                     disabled={isProcessing}
                     className="w-full bg-primary text-on-primary py-4 rounded-md font-manrope font-bold uppercase tracking-widest text-xs shadow-xl hover:bg-primary/90 transition-all cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50"
@@ -226,7 +220,7 @@ export default function CartSidebar() {
                     {isProcessing ? "Processing..." : "Pay Now (Razorpay)"}
                   </button>
 
-                  <button 
+                  <button
                     onClick={handleShopifyCheckout}
                     className="w-full border border-outline-variant text-on-surface py-4 rounded-md font-manrope font-bold uppercase tracking-widest text-[10px] shadow-sm hover:bg-surface-container transition-all cursor-pointer"
                   >

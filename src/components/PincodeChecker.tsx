@@ -2,9 +2,17 @@ import React, { useState } from "react";
 import { Truck, MapPin, CheckCircle, AlertTriangle } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
+interface CourierCompany {
+  etd?: string;
+}
+
+interface ServiceabilityResult {
+  available_courier_companies?: CourierCompany[];
+}
+
 export default function PincodeChecker() {
   const [pincode, setPincode] = useState("");
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<ServiceabilityResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

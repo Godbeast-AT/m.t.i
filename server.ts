@@ -109,8 +109,12 @@ async function startServer() {
   app.post("/api/razorpay/order", async (req, res) => {
     try {
       const { amount, currency = "INR", receipt } = req.body;
+      const parsedAmount = Number(amount);
+      if (!Number.isFinite(parsedAmount) || parsedAmount <= 0) {
+        return res.status(400).json({ status: false, message: "Invalid amount." });
+      }
       const options = {
-        amount: Math.round(amount * 100), // Razorpay expects amount in paise
+        amount: Math.round(parsedAmount * 100), // Razorpay expects amount in paise
         currency,
         receipt,
       };

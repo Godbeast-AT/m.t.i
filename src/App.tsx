@@ -3,16 +3,18 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import { Suspense, lazy } from "react";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import HomePage from "./pages/HomePage";
-import ContactPage from "./pages/ContactPage";
-import TrackOrder from "./pages/TrackOrder";
-import ProductDetailsPage from "./pages/ProductDetailsPage";
 import ScrollToTop from "./components/ScrollToTop";
 import { CartProvider } from "./context/CartContext";
 import CartSidebar from "./components/CartSidebar";
+
+const HomePage = lazy(() => import("./pages/HomePage"));
+const ContactPage = lazy(() => import("./pages/ContactPage"));
+const TrackOrder = lazy(() => import("./pages/TrackOrder"));
+const ProductDetailsPage = lazy(() => import("./pages/ProductDetailsPage"));
 
 export default function App() {
   return (
@@ -23,12 +25,14 @@ export default function App() {
         <div className="min-h-screen selection:bg-primary/10 selection:text-primary">
           <Navbar />
           <main>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/contact" element={<ContactPage />} />
-              <Route path="/track" element={<TrackOrder />} />
-              <Route path="/product/:id" element={<ProductDetailsPage />} />
-            </Routes>
+            <Suspense fallback={<div className="min-h-[40vh] w-full" />}>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/contact" element={<ContactPage />} />
+                <Route path="/track" element={<TrackOrder />} />
+                <Route path="/product/:id" element={<ProductDetailsPage />} />
+              </Routes>
+            </Suspense>
           </main>
           <Footer />
         </div>

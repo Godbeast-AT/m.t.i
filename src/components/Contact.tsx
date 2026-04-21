@@ -47,19 +47,12 @@ export default function Contact() {
             ))}
           </div>
           
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="w-full h-64 rounded-xl overflow-hidden shadow-sm grayscale opacity-80"
-          >
-            <img 
-              className="w-full h-full object-cover" 
-              src="https://picsum.photos/seed/indore-map/800/400" 
-              alt="Map of Indore"
-              referrerPolicy="no-referrer"
-            />
-          </motion.div>
+            className="w-full h-64 rounded-xl overflow-hidden shadow-sm grayscale opacity-80 bg-[radial-gradient(circle_at_center,rgba(190,133,53,0.25),rgba(20,20,20,0.95))] border border-outline-variant/10"
+          />
         </div>
         
         {/* Inquiry Form */}

@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Plus, Minus } from "lucide-react";
 
@@ -17,19 +17,20 @@ const faqs = [
   }
 ];
 
-function FAQItem({ faq, index }: { faq: typeof faqs[0], index: number, key?: number }) {
+function FAQItem({ faq }: { faq: typeof faqs[0]; key?: React.Key }) {
   const [isOpen, setIsOpen] = React.useState(false);
 
   return (
     <div className="border-b border-outline-variant/10">
-      <button 
+      <button
+        type="button"
         onClick={() => setIsOpen(!isOpen)}
         className="w-full py-10 flex justify-between items-center text-left group"
       >
-        <h3 className={`font-noto-serif text-sm md:text-lg uppercase tracking-[0.2em] transition-colors duration-500 ${isOpen ? 'text-primary' : 'text-on-surface group-hover:text-primary'}`}>
+        <h3 className={`font-noto-serif text-sm md:text-lg uppercase tracking-[0.2em] transition-colors duration-500 ${isOpen ? "text-primary" : "text-on-surface group-hover:text-primary"}`}>
           {faq.question}
         </h3>
-        <div className={`transition-transform duration-500 ${isOpen ? 'rotate-180 text-primary' : 'text-on-surface-variant'}`}>
+        <div className={`transition-transform duration-500 ${isOpen ? "rotate-180 text-primary" : "text-on-surface-variant"}`}>
           {isOpen ? <Minus size={18} strokeWidth={1} /> : <Plus size={18} strokeWidth={1} />}
         </div>
       </button>
@@ -67,7 +68,7 @@ export default function FAQs() {
 
         <div className="border border-outline-variant/30 rounded-3xl px-8 md:px-16 bg-surface">
           {faqs.map((faq, index) => (
-            <FAQItem key={index} faq={faq} index={index} />
+            <FAQItem key={index} faq={faq} />
           ))}
         </div>
       </div>

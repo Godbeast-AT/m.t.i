@@ -1,10 +1,9 @@
-import React from "react";
+﻿import React from "react";
 import { motion } from "motion/react";
 
 export default function Story() {
   return (
     <section id="our-story" className="bg-surface py-32 overflow-hidden relative">
-      {/* Brand Rail (Recipe 12) */}
       <div className="absolute left-4 top-1/2 -translate-y-1/2 hidden xl:block pointer-events-none">
         <span className="font-manrope text-[10px] uppercase tracking-[1em] text-primary/20 [writing-mode:vertical-lr] font-bold">
           MANISH THAKUR INDUSTRIES • SINCE 1989
@@ -13,7 +12,7 @@ export default function Story() {
 
       <div className="max-w-screen-2xl mx-auto px-6 md:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -27,29 +26,16 @@ export default function Story() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
                 whileHover={{ scale: 1.02 }}
-              >
-                <img 
-                  className="rounded-xl shadow-sm w-full aspect-square object-cover transition-transform duration-1000 group-hover:scale-105" 
-                  src="https://picsum.photos/seed/mti-old-factory/600/600" 
-                  alt="Traditional stone grinding setup"
-                  referrerPolicy="no-referrer"
-                />
-              </motion.div>
+                className="rounded-xl shadow-sm w-full aspect-square bg-[radial-gradient(circle_at_top,rgba(201,134,40,0.5),rgba(92,45,12,0.85))] border border-white/10"
+              />
               <motion.div
                 initial={{ opacity: 0, y: -30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.2 }}
                 whileHover={{ scale: 1.02 }}
-                className="mb-12"
-              >
-                <img 
-                  className="rounded-xl shadow-sm w-full aspect-square object-cover transition-transform duration-1000 group-hover:scale-105" 
-                  src="https://picsum.photos/seed/mti-father-hands/600/600" 
-                  alt="Hands of a master craftsman"
-                  referrerPolicy="no-referrer"
-                />
-              </motion.div>
+                className="mb-12 rounded-xl shadow-sm w-full aspect-square bg-[radial-gradient(circle_at_top,rgba(94,58,22,0.35),rgba(20,20,20,0.88))] border border-white/10"
+              />
             </div>
             <div className="absolute -bottom-6 -right-6 bg-primary text-on-primary p-8 rounded-2xl hidden md:block shadow-xl">
               <span className="font-noto-serif text-4xl italic block mb-1">1989</span>
@@ -57,7 +43,7 @@ export default function Story() {
             </div>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -91,14 +77,14 @@ export default function Story() {
               >
                 High interest, bad luck, and a mountain of 20-lakh debt forced him to shut his doors. When the factory lights went out, the "family" we trusted walked away. I watched him lose everything, but I never watched him lose his soul.
               </motion.p>
-              <motion.p 
+              <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 1.5, delay: 0.4, ease: [0.19, 1, 0.22, 1] }}
                 className="font-noto-serif italic text-2xl text-on-surface border-l-4 border-primary pl-6 py-2"
               >
-                "If I am going to be broke, I’d rather be broke selling the truth than get rich selling lies."
+                "If I am going to be broke, I'd rather be broke selling the truth than get rich selling lies."
               </motion.p>
               <motion.p
                 initial={{ opacity: 0, y: 20 }}

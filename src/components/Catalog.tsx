@@ -10,13 +10,11 @@ const filters = [
   { label: "All", value: "all" },
   { label: "Chili", value: "Chili" },
   { label: "Turmeric", value: "Turmeric" },
-  { label: "Coriander", value: "Coriander" },
-  { label: "Blends", value: "Blend" },
-  { label: "The Fire", value: "The Fire" },
-  { label: "Authentic", value: "Authentic" }
+  { label: "Coriander", value: "Coriander" }
 ];
 
 const ProductCard = memo(({ product, onQuickAdd }: { product: Product; onQuickAdd: (e: React.MouseEvent, p: Product) => void }) => {
+  const primaryImage = product.images[0];
   return (
     <Magnetic strength={0.1}>
       <Link to={`/product/${product.id}`}>
@@ -30,16 +28,25 @@ const ProductCard = memo(({ product, onQuickAdd }: { product: Product; onQuickAd
           className="group bg-surface-container-lowest rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all border border-outline-variant/10 h-full"
         >
           <div className="aspect-[4/5] overflow-hidden relative bg-surface-container">
-            <motion.img 
-              initial={{ scale: 1.1 }}
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
-              src={product.images[0]} 
-              alt={product.name} 
-              loading="lazy"
-              className="w-full h-full object-cover"
-              referrerPolicy="no-referrer"
-            />
+            {primaryImage ? (
+              <motion.img 
+                initial={{ scale: 1.1 }}
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
+                src={primaryImage} 
+                alt={product.name} 
+                loading="lazy"
+                className="w-full h-full object-cover"
+                referrerPolicy="no-referrer"
+              />
+            ) : (
+              <div className="w-full h-full bg-gradient-to-br from-surface-container via-surface-container-lowest to-primary/10 flex items-center justify-center">
+                <div className="text-center px-6">
+                  <span className="block font-noto-serif text-2xl text-on-surface mb-2">{product.name}</span>
+                  <span className="font-manrope text-[10px] uppercase tracking-[0.3em] text-on-surface-variant">Photo coming soon</span>
+                </div>
+              </div>
+            )}
             <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full shadow-sm">
               <span className="font-manrope text-[10px] font-bold text-primary uppercase tracking-widest">{product.tag}</span>

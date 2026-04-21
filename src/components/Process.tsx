@@ -1,24 +1,24 @@
-import React from "react";
+﻿import React from "react";
 import { motion } from "motion/react";
 
 const steps = [
   {
     title: "No Fillers, No Lies",
     hindi: "मिलावट मुक्त",
-    description: "Big brands use wood dust and artificial colors. We use only the truth. If it isn't good enough for my mother’s kitchen, it doesn't leave our doors.",
-    image: "https://picsum.photos/seed/mti-pure-spices/800/600"
+    description: "Big brands use wood dust and artificial colors. We use only the truth. If it isn't good enough for my mother's kitchen, it doesn't leave our doors.",
+    image: ""
   },
   {
     title: "Slow Stone Grinding",
     hindi: "धीमी पत्थर पिसाई",
     description: "We use the same slow-grinding methods my father perfected in 1989. High-heat grinding kills oils; our process preserves the soul of the spice.",
-    image: "https://picsum.photos/seed/mti-stone-chakki/800/600"
+    image: ""
   },
   {
     title: "Family Integrity",
     hindi: "पारिवारिक ईमानदारी",
     description: "We work independently. No middlemen, no toxic outside influence. Just a father and son ensuring that what enters your home is sacred.",
-    image: "https://picsum.photos/seed/mti-family-kitchen/800/600"
+    image: ""
   }
 ];
 
@@ -38,7 +38,7 @@ export default function Process() {
 
         <div className="space-y-40">
           {steps.map((step, index) => (
-            <motion.div 
+            <motion.div
               key={step.title}
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -48,23 +48,15 @@ export default function Process() {
                 index % 2 === 1 ? "lg:flex-row-reverse" : ""
               }`}
             >
-              {/* Image with Decorative Number */}
               <div className="relative w-full lg:w-1/2">
                 <span className="absolute -top-12 -left-8 lg:-top-20 lg:-left-16 font-noto-serif font-black text-[120px] lg:text-[200px] text-primary/5 leading-none select-none z-0">
                   0{index + 1}
                 </span>
-                <motion.div 
+                <motion.div
                   whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
-                  className="relative z-10 aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-outline-variant/10"
+                  className="relative z-10 aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-outline-variant/10 bg-[radial-gradient(circle_at_top,rgba(238,205,145,0.45),rgba(94,58,22,0.88))]"
                 >
-                  <img 
-                    src={step.image} 
-                    alt={step.title} 
-                    loading="lazy"
-                    className="w-full h-full object-cover"
-                    referrerPolicy="no-referrer"
-                  />
                   <div className="absolute inset-0 bg-primary/5 mix-blend-multiply" />
                 </motion.div>
                 <div className={`absolute -bottom-8 ${index % 2 === 1 ? "-left-8" : "-right-8"} bg-surface-container-lowest p-6 rounded-2xl shadow-xl hidden lg:block border border-outline-variant/10`}>
@@ -72,7 +64,6 @@ export default function Process() {
                 </div>
               </div>
 
-              {/* Text Content */}
               <div className="w-full lg:w-1/2 space-y-6">
                 <h3 className="font-noto-serif text-3xl md:text-4xl text-on-surface">
                   {step.title}

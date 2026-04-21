@@ -8,6 +8,7 @@ import Catalog from "../components/Catalog";
 import Reviews from "../components/Reviews";
 import FAQs from "../components/FAQs";
 import Certifications from "../components/Certifications";
+import Contact from "../components/Contact";
 import DraggableSeal from "../components/DraggableSeal";
 
 export default function HomePage() {
@@ -33,6 +34,7 @@ export default function HomePage() {
       <Reviews />
       <FAQs />
       <Certifications />
+      <Contact />
       <DraggableSeal />
     </div>
   );

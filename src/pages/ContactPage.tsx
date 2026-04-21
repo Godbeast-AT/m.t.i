@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+﻿import { motion } from "motion/react";
 import { MapPin, Mail, Phone, Clock } from "lucide-react";
 
 export default function ContactPage() {
@@ -6,7 +6,6 @@ export default function ContactPage() {
     <div className="pt-32 pb-20 bg-surface">
       <section className="px-6 md:px-12 max-w-screen-2xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-20">
-          {/* Left Column: Information */}
           <div className="lg:col-span-5 space-y-12">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -29,28 +28,28 @@ export default function ContactPage() {
 
             <div className="space-y-8">
               {[
-                { 
-                  icon: MapPin, 
-                  title: "Heritage Headquarters", 
-                  content: "Plot 112-B, Industrial Estate, Indore, Madhya Pradesh 452003" 
+                {
+                  icon: MapPin,
+                  title: "Heritage Headquarters",
+                  content: "Plot 112-B, Industrial Estate, Indore, Madhya Pradesh 452003"
                 },
-                { 
-                  icon: Mail, 
-                  title: "Email Us", 
-                  content: "heritage@mti-spices.com\nsales@mti-spices.com" 
+                {
+                  icon: Mail,
+                  title: "Email Us",
+                  content: "heritage@mti-spices.com\nsales@mti-spices.com"
                 },
-                { 
-                  icon: Phone, 
-                  title: "Call Us", 
-                  content: "+91 731 2450 8XX\n+91 98260 XXXXX" 
+                {
+                  icon: Phone,
+                  title: "Call Us",
+                  content: "+91 731 2450 8XX\n+91 98260 XXXXX"
                 },
-                { 
-                  icon: Clock, 
-                  title: "Business Hours", 
-                  content: "Monday - Saturday: 9:00 AM - 7:00 PM\nSunday: Closed" 
+                {
+                  icon: Clock,
+                  title: "Business Hours",
+                  content: "Monday - Saturday: 9:00 AM - 7:00 PM\nSunday: Closed"
                 }
               ].map((item, index) => (
-                <motion.div 
+                <motion.div
                   key={item.title}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -69,8 +68,7 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* Right Column: Form */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -81,18 +79,18 @@ export default function ContactPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                   <div className="space-y-2">
                     <label className="font-manrope text-[10px] uppercase tracking-widest font-bold text-on-surface-variant">First Name</label>
-                    <input 
-                      className="w-full bg-transparent border-0 border-b border-outline-variant py-3 focus:ring-0 focus:border-primary font-noto-serif placeholder:text-neutral-300 transition-colors" 
-                      placeholder="Manish" 
-                      type="text" 
+                    <input
+                      className="w-full bg-transparent border-0 border-b border-outline-variant py-3 focus:ring-0 focus:border-primary font-noto-serif placeholder:text-neutral-300 transition-colors"
+                      placeholder="Manish"
+                      type="text"
                     />
                   </div>
                   <div className="space-y-2">
                     <label className="font-manrope text-[10px] uppercase tracking-widest font-bold text-on-surface-variant">Last Name</label>
-                    <input 
-                      className="w-full bg-transparent border-0 border-b border-outline-variant py-3 focus:ring-0 focus:border-primary font-noto-serif placeholder:text-neutral-300 transition-colors" 
-                      placeholder="Thakur" 
-                      type="text" 
+                    <input
+                      className="w-full bg-transparent border-0 border-b border-outline-variant py-3 focus:ring-0 focus:border-primary font-noto-serif placeholder:text-neutral-300 transition-colors"
+                      placeholder="Thakur"
+                      type="text"
                     />
                   </div>
                 </div>
@@ -100,22 +98,22 @@ export default function ContactPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                   <div className="space-y-2">
                     <label className="font-manrope text-[10px] uppercase tracking-widest font-bold text-on-surface-variant">Email Address</label>
-                    <input 
-                      className="w-full bg-transparent border-0 border-b border-outline-variant py-3 focus:ring-0 focus:border-primary font-noto-serif placeholder:text-neutral-300 transition-colors" 
-                      placeholder="hello@domain.com" 
-                      type="email" 
+                    <input
+                      className="w-full bg-transparent border-0 border-b border-outline-variant py-3 focus:ring-0 focus:border-primary font-noto-serif placeholder:text-neutral-300 transition-colors"
+                      placeholder="hello@domain.com"
+                      type="email"
                     />
                   </div>
                   <div className="space-y-2">
                     <label className="font-manrope text-[10px] uppercase tracking-widest font-bold text-on-surface-variant">Phone Number</label>
-                    <input 
-                      className="w-full bg-transparent border-0 border-b border-outline-variant py-3 focus:ring-0 focus:border-primary font-noto-serif placeholder:text-neutral-300 transition-colors" 
-                      placeholder="+91 00000 00000" 
-                      type="tel" 
+                    <input
+                      className="w-full bg-transparent border-0 border-b border-outline-variant py-3 focus:ring-0 focus:border-primary font-noto-serif placeholder:text-neutral-300 transition-colors"
+                      placeholder="+91 00000 00000"
+                      type="tel"
                     />
                   </div>
                 </div>
-                
+
                 <div className="space-y-2">
                   <label className="font-manrope text-[10px] uppercase tracking-widest font-bold text-on-surface-variant">Nature of Inquiry</label>
                   <select className="w-full bg-transparent border-0 border-b border-outline-variant py-3 focus:ring-0 focus:border-primary font-noto-serif appearance-none cursor-pointer">
@@ -125,20 +123,20 @@ export default function ContactPage() {
                     <option>Feedback & Support</option>
                   </select>
                 </div>
-                
+
                 <div className="space-y-2">
                   <label className="font-manrope text-[10px] uppercase tracking-widest font-bold text-on-surface-variant">Your Message</label>
-                  <textarea 
-                    className="w-full bg-transparent border-0 border-b border-outline-variant py-3 focus:ring-0 focus:border-primary font-noto-serif placeholder:text-neutral-300 resize-none transition-colors" 
-                    placeholder="Tell us about your requirements..." 
+                  <textarea
+                    className="w-full bg-transparent border-0 border-b border-outline-variant py-3 focus:ring-0 focus:border-primary font-noto-serif placeholder:text-neutral-300 resize-none transition-colors"
+                    placeholder="Tell us about your requirements..."
                     rows={5}
                   ></textarea>
                 </div>
-                
-                <motion.button 
+
+                <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full bg-primary text-on-primary py-6 rounded-md font-manrope font-bold uppercase tracking-widest text-xs hover:bg-primary/90 transition-all shadow-xl shadow-primary/20" 
+                  className="w-full bg-primary text-on-primary py-6 rounded-md font-manrope font-bold uppercase tracking-widest text-xs hover:bg-primary/90 transition-all shadow-xl shadow-primary/20"
                   type="submit"
                 >
                   Send Message
@@ -149,16 +147,8 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Map Section */}
       <section className="mt-32 px-6 md:px-12 max-w-screen-2xl mx-auto">
-        <div className="w-full h-[500px] rounded-2xl overflow-hidden shadow-2xl grayscale hover:grayscale-0 transition-all duration-1000">
-          <img 
-            className="w-full h-full object-cover" 
-            src="https://picsum.photos/seed/mti-location/1600/800" 
-            alt="M.T.I Factory Location"
-            referrerPolicy="no-referrer"
-          />
-        </div>
+        <div className="w-full h-[500px] rounded-2xl overflow-hidden shadow-2xl grayscale hover:grayscale-0 transition-all duration-1000 bg-[radial-gradient(circle_at_top,rgba(190,133,53,0.25),rgba(17,24,39,0.97))] border border-outline-variant/10" />
       </section>
     </div>
   );
