@@ -15,9 +15,12 @@ import { CartProvider } from "./context/CartContext";
 import CartSidebar from "./components/CartSidebar";
 
 export default function App() {
+  // Dynamically determine basename for GitHub Pages and Custom Domains
+  const basename = window.location.pathname.startsWith('/m.t.i') ? '/m.t.i' : '/';
+
   return (
     <CartProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={basename}>
         <ScrollToTop />
         <CartSidebar />
         <div className="min-h-screen selection:bg-primary/10 selection:text-primary">
