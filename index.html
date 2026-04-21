@@ -4,25 +4,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>M.T.I - Heritage Spices of Indore</title>
-    <!-- Start Single Page Apps for GitHub Pages -->
-    <script type="text/javascript">
-      (function(l) {
-        if (l.search[1] === '/' ) {
-          var decoded = l.search.slice(1).split('&').map(function(s) { 
-            return s.replace(/~and~/g, '&')
-          }).join('?');
-          window.history.replaceState(null, null,
-              l.pathname.slice(0, -1) + decoded + l.hash
-          );
-        }
-      }(window.location))
-    </script>
-    <!-- End Single Page Apps for GitHub Pages -->
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <div id="root">
+      <div id="loading-screen" style="height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: sans-serif; background: #f9f9f9; color: #6a0e00; text-align: center; padding: 20px;">
+        <h1 style="margin-bottom: 10px;">M.T.I - Loading...</h1>
+        <p id="error-message" style="display: none; color: #d00; max-width: 400px; line-height: 1.5;">
+          If this persists, check the browser console for "Failed to load resource" errors.
+        </p>
+      </div>
+    </div>
+    <script>
+      // Show error message after 5 seconds if app hasn't loaded
+      setTimeout(() => {
+        const msg = document.getElementById('error-message');
+        if (msg && document.getElementById('loading-screen')) {
+          msg.style.display = 'block';
+        }
+      }, 5000);
+    </script>
+    <script type="module" src="/src/main.tsx" onerror="console.error('Failed to load main script. Check if base path matches repository name.')"></script>
   </body>
 </html>
 

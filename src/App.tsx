@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import HomePage from "./pages/HomePage";
@@ -15,12 +15,9 @@ import { CartProvider } from "./context/CartContext";
 import CartSidebar from "./components/CartSidebar";
 
 export default function App() {
-  // Dynamically determine basename for GitHub Pages and Custom Domains
-  const basename = window.location.pathname.startsWith('/m.t.i') ? '/m.t.i' : '/';
-
   return (
     <CartProvider>
-      <BrowserRouter basename={basename}>
+      <HashRouter>
         <ScrollToTop />
         <CartSidebar />
         <div className="min-h-screen selection:bg-primary/10 selection:text-primary">
@@ -35,7 +32,7 @@ export default function App() {
           </main>
           <Footer />
         </div>
-      </BrowserRouter>
+      </HashRouter>
     </CartProvider>
   );
 }
