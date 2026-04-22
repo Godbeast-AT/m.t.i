@@ -59,10 +59,10 @@ export default function Process() {
                   transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
                   className="relative z-10 aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-outline-variant/10 bg-[#efe7da]"
                 >
-                  {index === 1 && (
+                  {index === 2 && (
                     <img
-                      src={`${(import.meta as any).env.BASE_URL}images/dry-red-kashmiri-chili.jpg`}
-                      alt="Grinding spices with a traditional stone mill"
+                      src={`${(import.meta as any).env.BASE_URL}images/process-step-3.jpg`}
+                      alt="Stone mortar with chili and spices"
                       className="absolute inset-0 h-full w-full object-cover object-center"
                       loading="lazy"
                     />

@@ -37,19 +37,19 @@ export default function Hero() {
         <div className="absolute inset-0 bg-gradient-to-t from-on-surface via-transparent to-on-surface/20" />
       </div>
 
-      <div className="absolute inset-y-0 right-0 w-full lg:w-[52%] z-[1]">
+      <div className="absolute inset-0 z-[1]">
         <img
-          src={`${(import.meta as any).env.BASE_URL}images/hero-chili-field.jpg`}
-          alt="Chili field"
-          className="h-full w-full object-cover object-center lg:object-right"
+          src={`${(import.meta as any).env.BASE_URL}images/home-hero-gemini.png`}
+          alt="Family product and spice portrait"
+          className="h-full w-full object-cover object-center"
           loading="eager"
         />
-        <div className="absolute inset-0 bg-gradient-to-l from-on-surface/10 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-on-surface/80 via-on-surface/35 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-on-surface/55 via-transparent to-on-surface/10" />
       </div>
 
       <div className="relative z-10 px-6 md:px-12 max-w-screen-2xl mx-auto w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div className="max-w-4xl">
+        <div className="max-w-4xl">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -136,8 +136,7 @@ export default function Hero() {
                 </button>
               </Magnetic>
             </motion.div>
-          </motion.div>
-          </div>
+            </motion.div>
         </div>
       </div>
     </section>
