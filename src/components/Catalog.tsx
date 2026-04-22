@@ -27,7 +27,7 @@ const ProductCard = memo(({ product, onQuickAdd }: { product: Product; onQuickAd
           whileHover={{ y: -10 }}
           className="group bg-surface-container-lowest rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all border border-outline-variant/10 h-full"
         >
-          <div className="aspect-[4/5] overflow-hidden relative bg-surface-container">
+          <div className="aspect-[4/5] overflow-hidden relative bg-gradient-to-br from-[#f7efe4] via-white to-[#f0e0c2]">
             {primaryImage ? (
               <motion.img 
                 initial={{ scale: 1.1 }}
@@ -36,7 +36,7 @@ const ProductCard = memo(({ product, onQuickAdd }: { product: Product; onQuickAd
                 src={primaryImage} 
                 alt={product.name} 
                 loading="lazy"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain p-5 md:p-6 mix-blend-multiply drop-shadow-[0_18px_26px_rgba(60,30,0,0.12)]"
                 referrerPolicy="no-referrer"
               />
             ) : (
@@ -48,6 +48,7 @@ const ProductCard = memo(({ product, onQuickAdd }: { product: Product; onQuickAd
               </div>
             )}
             <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/5 to-transparent pointer-events-none" />
             <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full shadow-sm">
               <span className="font-manrope text-[10px] font-bold text-primary uppercase tracking-widest">{product.tag}</span>
             </div>

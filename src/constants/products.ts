@@ -1,4 +1,4 @@
-﻿export interface Product {
+export interface Product {
   id: string;
   name: string;
   hindi: string;
@@ -12,6 +12,8 @@
   shopifyVariantId?: string;
 }
 
+const asset = (path: string) => `${(import.meta as any).env.BASE_URL}${path}`;
+
 export const products: Product[] = [
   {
     id: "turmeric-powder",
@@ -21,8 +23,8 @@ export const products: Product[] = [
     weight: "200g",
     type: "Turmeric",
     images: [
-      "/products/turmeric/front.png",
-      "/products/turmeric/back.png"
+      asset("products/turmeric/front.png"),
+      asset("products/turmeric/back.png")
     ],
     tag: "Authentic",
     description: "Experience the golden essence of health. Our turmeric is sourced from the finest roots and ground at low temperatures to retain its high curcumin content. It's the same turmeric my father started with in 1989—unadulterated, earthy, and deeply healing.",
@@ -37,8 +39,8 @@ export const products: Product[] = [
     weight: "200g",
     type: "Coriander",
     images: [
-      "/products/coriander/front.png",
-      "/products/coriander/back.png"
+      asset("products/coriander/front.png"),
+      asset("products/coriander/back.png")
     ],
     tag: "Fresh",
     description: "The aroma of freshly ground coriander is unmistakable. We use premium seeds, cleaned and dried to perfection before being stone-ground. This process ensures that the delicate essential oils remain intact, providing a cooling and fragrant addition to every meal.",
@@ -52,8 +54,8 @@ export const products: Product[] = [
     weight: "200g",
     type: "Chili",
     images: [
-      "/products/chili/front.png",
-      "/products/chili/back.png"
+      asset("products/chili/front.png"),
+      asset("products/chili/back.png")
     ],
     tag: "The Fire",
     description: "Our chili powder is not just a spice; it's a testament to purity. Ground slowly on traditional stone mills (chakkis) to preserve the natural oils and vibrant color. Unlike commercial brands, we add zero fillers, zero artificial colors, and zero wood dust. Just pure, sun-dried chilies that pack a punch of authentic flavor.",
