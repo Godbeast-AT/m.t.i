@@ -61,7 +61,7 @@ export default function Process() {
                 >
                   {index === 1 && (
                     <img
-                      src={`${(import.meta as any).env.BASE_URL}images/grinding-stone.jpg`}
+                      src={`${(import.meta as any).env.BASE_URL}images/dry-red-kashmiri-chili.jpg`}
                       alt="Grinding spices with a traditional stone mill"
                       className="absolute inset-0 h-full w-full object-cover object-center"
                       loading="lazy"

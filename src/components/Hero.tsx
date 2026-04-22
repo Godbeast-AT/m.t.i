@@ -26,7 +26,7 @@ export default function Hero() {
   };
 
   return (
-    <section ref={containerRef} className="relative h-screen w-full overflow-hidden flex items-center bg-on-surface">
+    <section ref={containerRef} className="relative min-h-screen w-full overflow-hidden flex items-center bg-on-surface">
       <div className="absolute inset-0 z-0">
         <motion.div
           style={{ scale }}
@@ -35,6 +35,16 @@ export default function Hero() {
         <div className="absolute inset-0 bg-primary/20 mix-blend-multiply" />
         <div className="absolute inset-0 bg-gradient-to-r from-on-surface via-on-surface/40 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-on-surface via-transparent to-on-surface/20" />
+      </div>
+
+      <div className="absolute inset-y-0 right-0 w-full lg:w-[52%] z-[1]">
+        <img
+          src={`${(import.meta as any).env.BASE_URL}images/hero-chili-field.jpg`}
+          alt="Chili field"
+          className="h-full w-full object-cover object-center lg:object-right"
+          loading="eager"
+        />
+        <div className="absolute inset-0 bg-gradient-to-l from-on-surface/10 via-transparent to-transparent" />
       </div>
 
       <div className="relative z-10 px-6 md:px-12 max-w-screen-2xl mx-auto w-full">
@@ -128,24 +138,6 @@ export default function Hero() {
             </motion.div>
           </motion.div>
           </div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 40, scale: 0.96 }}
-            animate={{ opacity: 1, x: 0, scale: 1 }}
-            transition={{ duration: 1.1, delay: 3.8, ease: [0.19, 1, 0.22, 1] }}
-            className="relative hidden lg:block"
-          >
-            <div className="absolute -inset-6 rounded-[2.5rem] bg-primary/10 blur-3xl" />
-            <div className="relative aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-[0_30px_90px_rgba(0,0,0,0.35)] border border-white/10 bg-[#efe7da]">
-              <img
-                src={`${(import.meta as any).env.BASE_URL}images/hero-grinding.png`}
-                alt="Man grinding spices with a traditional stone mill"
-                className="h-full w-full object-contain object-center p-4 md:p-6"
-                loading="eager"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-on-surface/25 via-transparent to-transparent pointer-events-none" />
-            </div>
-          </motion.div>
         </div>
       </div>
     </section>
