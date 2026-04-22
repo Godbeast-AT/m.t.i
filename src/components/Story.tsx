@@ -1,9 +1,9 @@
 import React from "react";
 import { motion } from "motion/react";
 
-const grindingImage =
-  "https://images.pexels.com/photos/21937647/pexels-photo-21937647.jpeg?cs=srgb&dl=pexels-filipp-romanovski-297235844-21937647.jpg&fm=jpg";
-const familyImage = `${(import.meta as any).env.BASE_URL}images/hero-grinding.png`;
+const asset = (path: string) => `${(import.meta as any).env.BASE_URL}${path}`;
+const grindingImage = asset("images/grinding-stone.jpg");
+const familyImage = asset("images/family-product.jpg");
 
 export default function Story() {
   return (
