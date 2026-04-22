@@ -57,17 +57,17 @@ export default function Process() {
                 <motion.div
                   whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
-                  className="relative z-10 aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-outline-variant/10 bg-[radial-gradient(circle_at_top,rgba(238,205,145,0.45),rgba(94,58,22,0.88))]"
+                  className="relative z-10 aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-outline-variant/10 bg-[#efe7da]"
                 >
                   {index === 1 && (
                     <img
                       src={`${(import.meta as any).env.BASE_URL}images/grinding-stone.jpg`}
                       alt="Grinding spices with a traditional stone mill"
-                      className="absolute inset-0 h-full w-full object-cover"
+                      className="absolute inset-0 h-full w-full object-cover object-center"
                       loading="lazy"
                     />
                   )}
-                  <div className="absolute inset-0 bg-primary/5 mix-blend-multiply" />
+                  <div className="absolute inset-0 bg-primary/5 mix-blend-multiply pointer-events-none" />
                 </motion.div>
                 <div className={`absolute -bottom-8 ${index % 2 === 1 ? "-left-8" : "-right-8"} bg-surface-container-lowest p-6 rounded-2xl shadow-xl hidden lg:block border border-outline-variant/10`}>
                   <span className="font-noto-serif italic text-primary text-xl px-4">{step.hindi}</span>

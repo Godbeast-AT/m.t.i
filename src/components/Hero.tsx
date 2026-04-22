@@ -136,14 +136,14 @@ export default function Hero() {
             className="relative hidden lg:block"
           >
             <div className="absolute -inset-6 rounded-[2.5rem] bg-primary/10 blur-3xl" />
-            <div className="relative aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-[0_30px_90px_rgba(0,0,0,0.35)] border border-white/10">
+            <div className="relative aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-[0_30px_90px_rgba(0,0,0,0.35)] border border-white/10 bg-[#efe7da]">
               <img
                 src={`${(import.meta as any).env.BASE_URL}images/hero-grinding.png`}
                 alt="Man grinding spices with a traditional stone mill"
-                className="h-full w-full object-cover"
+                className="h-full w-full object-contain object-center p-4 md:p-6"
                 loading="eager"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-on-surface/35 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-on-surface/25 via-transparent to-transparent pointer-events-none" />
             </div>
           </motion.div>
         </div>
