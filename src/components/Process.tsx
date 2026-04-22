@@ -59,9 +59,17 @@ export default function Process() {
                   transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
                   className="relative z-10 aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-outline-variant/10 bg-[#efe7da]"
                 >
-                  {index === 2 && (
+                  {index === 0 && (
                     <img
-                      src={`${(import.meta as any).env.BASE_URL}images/process-step-3.jpg`}
+                      src={`${(import.meta as any).env.BASE_URL}images/process-step-1.jpg`}
+                      alt="Chili field"
+                      className="absolute inset-0 h-full w-full object-cover object-center"
+                      loading="lazy"
+                    />
+                  )}
+                  {index === 1 && (
+                    <img
+                      src={`${(import.meta as any).env.BASE_URL}images/process-step-2.jpg`}
                       alt="Stone mortar with chili and spices"
                       className="absolute inset-0 h-full w-full object-cover object-center"
                       loading="lazy"
