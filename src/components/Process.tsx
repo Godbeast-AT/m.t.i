@@ -75,6 +75,14 @@ export default function Process() {
                       loading="lazy"
                     />
                   )}
+                  {index === 2 && (
+                    <img
+                      src={`${(import.meta as any).env.BASE_URL}images/process-step-3.jpg`}
+                      alt="Family integrity"
+                      className="absolute inset-0 h-full w-full object-cover object-center"
+                      loading="lazy"
+                    />
+                  )}
                   <div className="absolute inset-0 bg-primary/5 mix-blend-multiply pointer-events-none" />
                 </motion.div>
                 <div className={`absolute -bottom-8 ${index % 2 === 1 ? "-left-8" : "-right-8"} bg-surface-container-lowest p-6 rounded-2xl shadow-xl hidden lg:block border border-outline-variant/10`}>
