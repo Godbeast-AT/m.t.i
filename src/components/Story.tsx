@@ -1,5 +1,9 @@
-﻿import React from "react";
+import React from "react";
 import { motion } from "motion/react";
+
+const grindingImage =
+  "https://images.pexels.com/photos/21937647/pexels-photo-21937647.jpeg?cs=srgb&dl=pexels-filipp-romanovski-297235844-21937647.jpg&fm=jpg";
+const familyImage = `${(import.meta as any).env.BASE_URL}images/hero-grinding.png`;
 
 export default function Story() {
   return (
@@ -26,16 +30,30 @@ export default function Story() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
                 whileHover={{ scale: 1.02 }}
-                className="rounded-xl shadow-sm w-full aspect-square bg-[radial-gradient(circle_at_top,rgba(201,134,40,0.5),rgba(92,45,12,0.85))] border border-white/10"
-              />
+                className="relative rounded-xl shadow-sm w-full aspect-square overflow-hidden bg-[radial-gradient(circle_at_top,rgba(201,134,40,0.5),rgba(92,45,12,0.85))] border border-white/10"
+              >
+                <img
+                  src={grindingImage}
+                  alt="Hands grinding spices in a stone mortar"
+                  className="absolute inset-0 h-full w-full object-cover"
+                  loading="lazy"
+                />
+              </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: -30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.2 }}
                 whileHover={{ scale: 1.02 }}
-                className="mb-12 rounded-xl shadow-sm w-full aspect-square bg-[radial-gradient(circle_at_top,rgba(94,58,22,0.35),rgba(20,20,20,0.88))] border border-white/10"
-              />
+                className="relative mb-12 rounded-xl shadow-sm w-full aspect-square overflow-hidden bg-[radial-gradient(circle_at_top,rgba(94,58,22,0.35),rgba(20,20,20,0.88))] border border-white/10"
+              >
+                <img
+                  src={familyImage}
+                  alt="M.T.I. family product portrait"
+                  className="absolute inset-0 h-full w-full object-cover"
+                  loading="lazy"
+                />
+              </motion.div>
             </div>
             <div className="absolute -bottom-6 -right-6 bg-primary text-on-primary p-8 rounded-2xl hidden md:block shadow-xl">
               <span className="font-noto-serif text-4xl italic block mb-1">1989</span>

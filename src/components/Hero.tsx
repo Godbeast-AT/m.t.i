@@ -38,7 +38,8 @@ export default function Hero() {
       </div>
 
       <div className="relative z-10 px-6 md:px-12 max-w-screen-2xl mx-auto w-full">
-        <div className="max-w-4xl">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="max-w-4xl">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -125,6 +126,25 @@ export default function Hero() {
                 </button>
               </Magnetic>
             </motion.div>
+          </motion.div>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 40, scale: 0.96 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            transition={{ duration: 1.1, delay: 3.8, ease: [0.19, 1, 0.22, 1] }}
+            className="relative hidden lg:block"
+          >
+            <div className="absolute -inset-6 rounded-[2.5rem] bg-primary/10 blur-3xl" />
+            <div className="relative aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-[0_30px_90px_rgba(0,0,0,0.35)] border border-white/10">
+              <img
+                src={`${(import.meta as any).env.BASE_URL}images/hero-grinding.png`}
+                alt="Man grinding spices with a traditional stone mill"
+                className="h-full w-full object-cover"
+                loading="eager"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-on-surface/35 via-transparent to-transparent" />
+            </div>
           </motion.div>
         </div>
       </div>

@@ -148,7 +148,14 @@ export default function ContactPage() {
       </section>
 
       <section className="mt-32 px-6 md:px-12 max-w-screen-2xl mx-auto">
-        <div className="w-full h-[500px] rounded-2xl overflow-hidden shadow-2xl grayscale hover:grayscale-0 transition-all duration-1000 bg-[radial-gradient(circle_at_top,rgba(190,133,53,0.25),rgba(17,24,39,0.97))] border border-outline-variant/10" />
+        <div className="w-full h-[500px] rounded-2xl overflow-hidden shadow-2xl grayscale hover:grayscale-0 transition-all duration-1000 bg-[radial-gradient(circle_at_top,rgba(190,133,53,0.25),rgba(17,24,39,0.97))] border border-outline-variant/10 relative">
+          <img
+            src="https://unsplash.com/photos/PDBnKupmi7E/download?force=true"
+            alt="Spice jars on a wooden shelf"
+            className="absolute inset-0 h-full w-full object-cover"
+            loading="lazy"
+          />
+        </div>
       </section>
     </div>
   );

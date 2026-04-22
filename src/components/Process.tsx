@@ -22,6 +22,8 @@ const steps = [
   }
 ];
 
+const asset = (path: string) => `${(import.meta as any).env.BASE_URL}${path}`;
+
 export default function Process() {
   return (
     <section id="our-process" className="bg-surface py-32 overflow-hidden">
@@ -57,6 +59,14 @@ export default function Process() {
                   transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
                   className="relative z-10 aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-outline-variant/10 bg-[radial-gradient(circle_at_top,rgba(238,205,145,0.45),rgba(94,58,22,0.88))]"
                 >
+                  {index === 1 && (
+                    <img
+                      src="https://images.unsplash.com/photo-1542834369-f10ebf06d3cd?auto=format&fit=crop&w=1600&q=80"
+                      alt="Grinding spices with a traditional stone mill"
+                      className="absolute inset-0 h-full w-full object-cover"
+                      loading="lazy"
+                    />
+                  )}
                   <div className="absolute inset-0 bg-primary/5 mix-blend-multiply" />
                 </motion.div>
                 <div className={`absolute -bottom-8 ${index % 2 === 1 ? "-left-8" : "-right-8"} bg-surface-container-lowest p-6 rounded-2xl shadow-xl hidden lg:block border border-outline-variant/10`}>
