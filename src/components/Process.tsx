@@ -22,7 +22,7 @@ const steps = [
   }
 ];
 
-const asset = (path: string) => `${(import.meta as any).env.BASE_URL}${path}`;
+const asset = (path: string) => `/${path}`;
 
 export default function Process() {
   return (
@@ -61,7 +61,7 @@ export default function Process() {
                 >
                   {index === 0 && (
                     <img
-                      src={`${(import.meta as any).env.BASE_URL}images/process-step-1.jpg`}
+                      src="/images/process-step-1.jpg"
                       alt="Chili field"
                       className="absolute inset-0 h-full w-full object-cover object-center"
                       loading="lazy"
@@ -69,7 +69,7 @@ export default function Process() {
                   )}
                   {index === 1 && (
                     <img
-                      src={`${(import.meta as any).env.BASE_URL}images/process-step-2.jpg`}
+                      src="/images/process-step-2.jpg"
                       alt="Stone mortar with chili and spices"
                       className="absolute inset-0 h-full w-full object-cover object-center"
                       loading="lazy"
@@ -77,7 +77,7 @@ export default function Process() {
                   )}
                   {index === 2 && (
                     <img
-                      src={`${(import.meta as any).env.BASE_URL}images/process-step-3.jpg`}
+                      src="/images/process-step-3.jpg"
                       alt="Family integrity"
                       className="absolute inset-0 h-full w-full object-cover object-center"
                       loading="lazy"

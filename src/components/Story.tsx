@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "motion/react";
 
-const asset = (path: string) => `${(import.meta as any).env.BASE_URL}${path}`;
+const asset = (path: string) => `/${path}`;
 const grindingImage = asset("images/grinding-stone.jpg");
 const familyImage = asset("images/family-product.jpg");
 

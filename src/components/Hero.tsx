@@ -39,7 +39,7 @@ export default function Hero() {
 
       <div className="absolute inset-0 z-[1]">
         <img
-          src={`${(import.meta as any).env.BASE_URL}images/home-hero-gemini.png`}
+          src="/images/home-hero-gemini.png"
           alt="Family product and spice portrait"
           className="h-full w-full object-cover object-center"
           loading="eager"

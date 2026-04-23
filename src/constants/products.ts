@@ -12,7 +12,7 @@ export interface Product {
   shopifyVariantId?: string;
 }
 
-const asset = (path: string) => `${(import.meta as any).env.BASE_URL}${path}`;
+const asset = (path: string) => `/${path}`;
 
 export const products: Product[] = [
   {
