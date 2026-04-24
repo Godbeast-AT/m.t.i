@@ -29,13 +29,15 @@ const ProductCard = memo(({ product, onQuickAdd }: { product: Product; onQuickAd
         >
           <div className="aspect-[4/5] overflow-hidden relative bg-gradient-to-br from-[#f7efe4] via-white to-[#f0e0c2]">
             {primaryImage ? (
-              <motion.img 
+                <motion.img 
                 initial={{ scale: 1.1 }}
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
                 src={primaryImage} 
                 alt={product.name} 
                 loading="lazy"
+                decoding="async"
+                fetchPriority="low"
                 className="w-full h-full object-contain p-5 md:p-6 mix-blend-multiply drop-shadow-[0_18px_26px_rgba(60,30,0,0.12)]"
                 referrerPolicy="no-referrer"
               />

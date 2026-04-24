@@ -7,7 +7,7 @@ export default function SplashScreen() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(false);
-    }, 3500);
+    }, 1200);
     return () => clearTimeout(timer);
   }, []);
 
@@ -17,7 +17,7 @@ export default function SplashScreen() {
         <motion.div
           initial={{ y: 0 }}
           exit={{ y: "-100%" }}
-          transition={{ duration: 1.2, ease: [0.19, 1, 0.22, 1], delay: 0.5 }}
+          transition={{ duration: 0.7, ease: [0.19, 1, 0.22, 1] }}
           className="fixed inset-0 z-[100] bg-[#121212] flex items-center justify-center overflow-hidden"
         >
           <div className="relative z-10 text-center space-y-8">

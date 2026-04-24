@@ -164,6 +164,8 @@ export default function ProductDetailsPage() {
                     alt={product.name}
                     className="w-full h-full object-contain p-6 md:p-8 mix-blend-multiply drop-shadow-[0_22px_30px_rgba(60,30,0,0.14)]"
                     referrerPolicy="no-referrer"
+                    loading="eager"
+                    decoding="async"
                   />
                 </AnimatePresence>
               ) : (
@@ -186,7 +188,7 @@ export default function ProductDetailsPage() {
                     activeImage === idx ? "border-primary scale-95" : "border-transparent opacity-60 hover:opacity-100"
                   }`}
                 >
-                  <img src={img} alt="" className="w-full h-full object-contain p-2 bg-gradient-to-br from-[#f7efe4] via-white to-[#f0e0c2]" referrerPolicy="no-referrer" />
+                  <img src={img} alt="" className="w-full h-full object-contain p-2 bg-gradient-to-br from-[#f7efe4] via-white to-[#f0e0c2]" referrerPolicy="no-referrer" loading="lazy" decoding="async" fetchPriority="low" />
                   </button>
                 ))}
               </div>

@@ -65,6 +65,8 @@ export default function Process() {
                       alt="Chili field"
                       className="absolute inset-0 h-full w-full object-cover object-center"
                       loading="lazy"
+                      decoding="async"
+                      fetchPriority="low"
                     />
                   )}
                   {index === 1 && (
@@ -73,6 +75,8 @@ export default function Process() {
                       alt="Stone mortar with chili and spices"
                       className="absolute inset-0 h-full w-full object-cover object-center"
                       loading="lazy"
+                      decoding="async"
+                      fetchPriority="low"
                     />
                   )}
                   {index === 2 && (
@@ -81,6 +85,8 @@ export default function Process() {
                       alt="Family integrity"
                       className="absolute inset-0 h-full w-full object-cover object-center"
                       loading="lazy"
+                      decoding="async"
+                      fetchPriority="low"
                     />
                   )}
                   <div className="absolute inset-0 bg-primary/5 mix-blend-multiply pointer-events-none" />

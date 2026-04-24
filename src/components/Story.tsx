@@ -37,6 +37,8 @@ export default function Story() {
                   alt="Hands grinding spices in a stone mortar"
                   className="absolute inset-0 h-full w-full object-cover"
                   loading="lazy"
+                  decoding="async"
+                  fetchPriority="low"
                 />
               </motion.div>
               <motion.div
@@ -52,6 +54,8 @@ export default function Story() {
                   alt="M.T.I. family product portrait"
                   className="absolute inset-0 h-full w-full object-cover"
                   loading="lazy"
+                  decoding="async"
+                  fetchPriority="low"
                 />
               </motion.div>
             </div>

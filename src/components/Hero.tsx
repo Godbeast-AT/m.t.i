@@ -43,6 +43,8 @@ export default function Hero() {
           alt="Family product and spice portrait"
           className="h-full w-full object-cover object-center"
           loading="eager"
+          decoding="async"
+          fetchPriority="high"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-on-surface/80 via-on-surface/35 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-on-surface/55 via-transparent to-on-surface/10" />
