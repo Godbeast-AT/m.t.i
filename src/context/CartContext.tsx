@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 import Client from "shopify-buy";
 import { Product } from "../constants/products";
+import { CartCookie } from "../utils/cookies";
 
 // Initialize Shopify Client
 const shopifyDomain = ((import.meta as any).env.VITE_SHOPIFY_STORE_DOMAIN || "your-store.myshopify.com")
@@ -114,6 +115,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   // Debounced Sync
   useEffect(() => {
     localStorage.setItem("mti_cart", JSON.stringify(cart));
+    CartCookie.save(cart);
     
     if (isShopifyConnected) {
       const timeoutId = setTimeout(() => {
@@ -156,6 +158,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const clearCart = () => {
     setCart([]);
+    CartCookie.clear();
   };
 
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);

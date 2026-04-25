@@ -1,6 +1,8 @@
 import { motion } from "motion/react";
 import { MapPin, Mail, Phone } from "lucide-react";
 
+const whatsappLink = "https://wa.me/916264094456";
+
 export default function Contact() {
   return (
     <section id="contact" className="bg-surface-container-highest py-32 px-6 md:px-12">
@@ -19,16 +21,22 @@ export default function Contact() {
           </motion.div>
           
           <div className="space-y-10">
-            {[
+            {[ 
               { 
                 icon: MapPin, 
                 title: "Heritage Headquarters", 
-                content: "Plot 112-B, Industrial Estate, Indore, Madhya Pradesh 452003" 
+                content: "1 B, Krishi Vihar Colony Main Vandana Nagar, Indore, M.P, India" 
               },
               { 
                 icon: Mail, 
                 title: "Inquiries", 
-                content: "heritage@mti-spices.com\n+91 731 2450 8XX" 
+                content: "104manish2020@gmail.com\n+91 8370041808" 
+              },
+              { 
+                icon: Phone, 
+                title: "WhatsApp", 
+                content: "+91 6264094456",
+                href: whatsappLink
               }
             ].map((item) => (
               <motion.div 
@@ -41,7 +49,18 @@ export default function Contact() {
                 <item.icon className="text-primary shrink-0" size={24} strokeWidth={1.5} />
                 <div>
                   <h4 className="font-manrope font-bold text-sm uppercase tracking-widest mb-2">{item.title}</h4>
-                  <p className="font-manrope text-on-surface-variant whitespace-pre-line">{item.content}</p>
+                  {item.href ? (
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-manrope text-on-surface-variant whitespace-pre-line hover:text-primary transition-colors"
+                    >
+                      {item.content}
+                    </a>
+                  ) : (
+                    <p className="font-manrope text-on-surface-variant whitespace-pre-line">{item.content}</p>
+                  )}
                 </div>
               </motion.div>
             ))}

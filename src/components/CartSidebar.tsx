@@ -3,98 +3,17 @@ import { motion, AnimatePresence } from "motion/react";
 import { X, ShoppingBag, Trash2, Plus, Minus, CreditCard } from "lucide-react";
 import { useCart } from "../context/CartContext";
 
-declare global {
-  interface Window {
-    Razorpay?: new (options: Record<string, unknown>) => { open: () => void };
-  }
-}
+const shopifyStoreDomain = ((import.meta as any).env.VITE_SHOPIFY_STORE_DOMAIN || "manish-thakur-industries.myshopify.com")
+  .replace(/^https?:\/\//, "")
+  .replace(/\/$/, "");
+const shopifyStoreUrl = `https://${shopifyStoreDomain}`;
 
 export default function CartSidebar() {
-  const { cart, isCartOpen, toggleCart, removeFromCart, updateQuantity, totalPrice, totalItems, checkoutUrl, isShopifyConnected } = useCart();
+  const { cart, isCartOpen, toggleCart, removeFromCart, updateQuantity, totalPrice, totalItems } = useCart();
   const [error, setError] = useState<string | null>(null);
-  const [isProcessing, setIsProcessing] = useState(false);
 
   const handleShopifyCheckout = () => {
-    setError(null);
-    if (isShopifyConnected && checkoutUrl) {
-      window.open(checkoutUrl, "_blank");
-    } else {
-      if (!isShopifyConnected) {
-        setError("Shopify credentials not found. Check .env settings.");
-      } else if (!checkoutUrl) {
-        setError("Checkout link not ready. Ensure products have valid Shopify Variant IDs.");
-      }
-      window.setTimeout(() => setError(null), 5000);
-    }
-  };
-
-  const handleRazorpayCheckout = async () => {
-    setError(null);
-    setIsProcessing(true);
-
-    try {
-      const response = await fetch("/api/razorpay/order", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          amount: totalPrice,
-          currency: "INR",
-          receipt: `receipt_${Date.now()}`,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (!data.status) {
-        throw new Error(data.message || "Failed to create Razorpay order");
-      }
-
-      const { order } = data;
-
-      if (!window.Razorpay) {
-        throw new Error("Razorpay SDK is not loaded. Please refresh and try again.");
-      }
-
-      const options = {
-        key: (import.meta as any).env.VITE_RAZORPAY_KEY_ID,
-        amount: order.amount,
-        currency: order.currency,
-        name: "M.T.I - Heritage Spices",
-        description: "Artisanal Spice Purchase",
-        order_id: order.id,
-        handler: async (response: any) => {
-          const verifyRes = await fetch("/api/razorpay/verify", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(response),
-          });
-
-          const verifyData = await verifyRes.json();
-          if (verifyData.status) {
-            alert("Payment successful! Order confirmed.");
-            toggleCart();
-          } else {
-            setError("Payment verification failed. Please contact support.");
-          }
-        },
-        prefill: {
-          name: "Customer Name",
-          email: "customer@example.com",
-          contact: "9999999999",
-        },
-        theme: {
-          color: "#6a0e00",
-        },
-      };
-
-      const rzp = new window.Razorpay(options);
-      rzp.open();
-    } catch (err: any) {
-      console.error("Razorpay Error:", err);
-      setError(err.message || "Failed to initiate payment. Check API credentials.");
-    } finally {
-      setIsProcessing(false);
-    }
+    window.location.href = shopifyStoreUrl;
   };
 
   return (
@@ -212,12 +131,11 @@ export default function CartSidebar() {
 
                 <div className="space-y-3">
                   <button
-                    onClick={handleRazorpayCheckout}
-                    disabled={isProcessing}
+                    onClick={handleShopifyCheckout}
                     className="w-full bg-primary text-on-primary py-4 rounded-md font-manrope font-bold uppercase tracking-widest text-xs shadow-xl hover:bg-primary/90 transition-all cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50"
                   >
                     <CreditCard size={14} />
-                    {isProcessing ? "Processing..." : "Pay Now (Razorpay)"}
+                    Pay Now (Shopify)
                   </button>
 
                   <button

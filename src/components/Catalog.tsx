@@ -18,7 +18,7 @@ const filters = [
 
 const ProductCard = memo(({ product, onQuickAdd }: { product: Product; onQuickAdd: (e: React.MouseEvent, p: Product) => void }) => {
   const primaryImage = product.images[0];
-  const cardLink = shopifyStoreUrl;
+  const cardLink = product.shopifyProductUrl || shopifyStoreUrl;
   const cardContent = (
     <motion.div 
       layout
@@ -97,7 +97,7 @@ export default function Catalog() {
   const handleQuickAdd = React.useCallback((e: React.MouseEvent, product: Product) => {
     e.preventDefault();
     e.stopPropagation();
-    window.location.href = shopifyStoreUrl;
+    window.location.href = product.shopifyProductUrl || shopifyStoreUrl;
   }, []);
 
   const filteredProducts = useMemo(() => {

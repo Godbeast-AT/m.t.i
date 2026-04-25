@@ -21,7 +21,6 @@ export default function Footer() {
     {
       title: "Support",
       links: [
-        { name: "Track Your Order", path: "/track" },
         { name: "Contact Us", path: "/contact" },
         { name: "FAQs", path: "/#faqs" },
         { name: "Shipping Policy", onClick: () => setIsShippingOpen(true) },
@@ -32,7 +31,7 @@ export default function Footer() {
       title: "Connect",
       links: [
         { name: "Instagram", path: "#" },
-        { name: "WhatsApp", path: "#" },
+        { name: "WhatsApp", path: "https://wa.me/916264094456" },
         { name: "LinkedIn", path: "#" }
       ]
     }
@@ -51,6 +50,13 @@ export default function Footer() {
             <p className="font-noto-serif italic text-primary/80 text-lg">
               "Zameer bech kar naseeb nahi badalte."
             </p>
+          </div>
+          <div className="space-y-2 text-sm text-on-surface-variant leading-relaxed">
+            <p>Heritage Headquarters</p>
+            <p>1 B, Krishi Vihar Colony Main Vandana Nagar, Indore, M.P, India</p>
+            <p>Inquiries: 104manish2020@gmail.com</p>
+            <p>Phone: +91 8370041808</p>
+            <p>WhatsApp: +91 6264094456</p>
           </div>
         </div>
         

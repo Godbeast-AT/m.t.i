@@ -10,10 +10,10 @@ import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import { CartProvider } from "./context/CartContext";
 import CartSidebar from "./components/CartSidebar";
+import CookieConsentBanner from "./components/CookieConsentBanner";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
-const TrackOrder = lazy(() => import("./pages/TrackOrder"));
 
 export default function App() {
   return (
@@ -21,6 +21,7 @@ export default function App() {
       <HashRouter>
         <ScrollToTop />
         <CartSidebar />
+        <CookieConsentBanner />
         <div className="min-h-screen selection:bg-primary/10 selection:text-primary">
           <Navbar />
           <main>
@@ -28,7 +29,6 @@ export default function App() {
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/contact" element={<ContactPage />} />
-                <Route path="/track" element={<TrackOrder />} />
               </Routes>
             </Suspense>
           </main>

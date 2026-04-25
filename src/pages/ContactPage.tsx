@@ -1,6 +1,8 @@
 ﻿import { motion } from "motion/react";
 import { MapPin, Mail, Phone, Clock } from "lucide-react";
 
+const whatsappLink = "https://wa.me/916264094456";
+
 export default function ContactPage() {
   return (
     <div className="pt-32 pb-20 bg-surface">
@@ -31,17 +33,23 @@ export default function ContactPage() {
                 {
                   icon: MapPin,
                   title: "Heritage Headquarters",
-                  content: "Plot 112-B, Industrial Estate, Indore, Madhya Pradesh 452003"
+                  content: "1 B, Krishi Vihar Colony Main Vandana Nagar, Indore, M.P, India"
                 },
                 {
                   icon: Mail,
                   title: "Email Us",
-                  content: "heritage@mti-spices.com\nsales@mti-spices.com"
+                  content: "104manish2020@gmail.com"
                 },
                 {
                   icon: Phone,
                   title: "Call Us",
-                  content: "+91 731 2450 8XX\n+91 98260 XXXXX"
+                  content: "+91 8370041808"
+                },
+                {
+                  icon: Phone,
+                  title: "WhatsApp",
+                  content: "+91 6264094456",
+                  href: whatsappLink
                 },
                 {
                   icon: Clock,
@@ -61,7 +69,18 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h4 className="font-manrope font-bold text-xs uppercase tracking-widest mb-2">{item.title}</h4>
-                    <p className="font-manrope text-on-surface-variant text-sm whitespace-pre-line leading-relaxed">{item.content}</p>
+                    {item.href ? (
+                      <a
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-manrope text-on-surface-variant text-sm whitespace-pre-line leading-relaxed hover:text-primary transition-colors"
+                      >
+                        {item.content}
+                      </a>
+                    ) : (
+                      <p className="font-manrope text-on-surface-variant text-sm whitespace-pre-line leading-relaxed">{item.content}</p>
+                    )}
                   </div>
                 </motion.div>
               ))}
