@@ -7,6 +7,9 @@ import Magnetic from "../components/Magnetic";
 import { useCart } from "../context/CartContext";
 import PincodeChecker from "../components/PincodeChecker";
 
+const shopifyStoreDomain = ((import.meta as any).env.VITE_SHOPIFY_STORE_DOMAIN || "").replace(/^https?:\/\//, "").replace(/\/$/, "");
+const shopifyStoreUrl = shopifyStoreDomain ? `https://${shopifyStoreDomain}` : "";
+
 declare global {
   interface Window {
     Razorpay?: new (options: Record<string, unknown>) => { open: () => void };
@@ -22,6 +25,11 @@ export default function ProductDetailsPage() {
   const [isBuying, setIsBuying] = useState(false);
   const { addToCart } = useCart();
   const hasImages = product ? product.images.length > 0 : false;
+
+  if (shopifyStoreUrl) {
+    window.location.replace(shopifyStoreUrl);
+    return null;
+  }
 
   useEffect(() => {
     window.scrollTo(0, 0);

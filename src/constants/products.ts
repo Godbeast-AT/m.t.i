@@ -19,7 +19,7 @@ export const products: Product[] = [
     id: "turmeric-powder",
     name: "Stone-Ground Turmeric",
     hindi: "पत्थर पिसी हल्दी",
-    price: "₹189",
+    price: "₹229",
     weight: "200g",
     type: "Turmeric",
     images: [
@@ -35,7 +35,7 @@ export const products: Product[] = [
     id: "coriander-powder",
     name: "Premium Coriander Powder",
     hindi: "प्रीमियम धनिया पाउडर",
-    price: "₹149",
+    price: "₹229",
     weight: "200g",
     type: "Coriander",
     images: [
@@ -50,7 +50,7 @@ export const products: Product[] = [
     id: "chili-powder",
     name: "Pure Stone-Ground Chili",
     hindi: "शुद्ध पत्थर पिसी मिर्च",
-    price: "₹249",
+    price: "₹229",
     weight: "200g",
     type: "Chili",
     images: [
@@ -63,3 +63,4 @@ export const products: Product[] = [
     shopifyVariantId: "gid://shopify/ProductVariant/123456789"
   }
 ];
+
