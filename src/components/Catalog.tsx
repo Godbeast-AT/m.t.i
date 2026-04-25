@@ -1,13 +1,13 @@
 import React, { useState, useMemo, memo } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Link } from "react-router-dom";
 
 import Magnetic from "./Magnetic";
 import { products, Product } from "../constants/products";
-import { useCart } from "../context/CartContext";
 
-const shopifyStoreDomain = ((import.meta as any).env.VITE_SHOPIFY_STORE_DOMAIN || "").replace(/^https?:\/\//, "").replace(/\/$/, "");
-const shopifyStoreUrl = shopifyStoreDomain ? `https://${shopifyStoreDomain}` : "";
+const shopifyStoreDomain = ((import.meta as any).env.VITE_SHOPIFY_STORE_DOMAIN || "manish-thakur-industries.myshopify.com")
+  .replace(/^https?:\/\//, "")
+  .replace(/\/$/, "");
+const shopifyStoreUrl = `https://${shopifyStoreDomain}`;
 
 const filters = [
   { label: "All", value: "all" },
@@ -18,7 +18,7 @@ const filters = [
 
 const ProductCard = memo(({ product, onQuickAdd }: { product: Product; onQuickAdd: (e: React.MouseEvent, p: Product) => void }) => {
   const primaryImage = product.images[0];
-  const cardLink = shopifyStoreUrl || `/product/${product.id}`;
+  const cardLink = shopifyStoreUrl;
   const cardContent = (
     <motion.div 
       layout
@@ -71,6 +71,7 @@ const ProductCard = memo(({ product, onQuickAdd }: { product: Product; onQuickAd
             type="button"
             onClick={(e) => onQuickAdd(e, product)}
             className="bg-surface-container text-on-surface p-3 rounded-full group-hover:bg-primary group-hover:text-on-primary transition-all cursor-pointer"
+            aria-label={`Open ${product.name} on Shopify`}
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </button>
@@ -81,15 +82,9 @@ const ProductCard = memo(({ product, onQuickAdd }: { product: Product; onQuickAd
 
   return (
     <Magnetic strength={0.1}>
-      {shopifyStoreUrl ? (
-        <a href={cardLink} rel="noopener noreferrer">
-          {cardContent}
-        </a>
-      ) : (
-        <Link to={cardLink}>
-          {cardContent}
-        </Link>
-      )}
+      <a href={cardLink} rel="noopener noreferrer">
+        {cardContent}
+      </a>
     </Magnetic>
   );
 });
@@ -98,13 +93,12 @@ ProductCard.displayName = "ProductCard";
 
 export default function Catalog() {
   const [activeFilter, setActiveFilter] = useState("all");
-  const { addToCart } = useCart();
 
   const handleQuickAdd = React.useCallback((e: React.MouseEvent, product: Product) => {
     e.preventDefault();
     e.stopPropagation();
-    addToCart(product, 1);
-  }, [addToCart]);
+    window.location.href = shopifyStoreUrl;
+  }, []);
 
   const filteredProducts = useMemo(() => {
     return products.filter(product => {

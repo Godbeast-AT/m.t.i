@@ -14,7 +14,6 @@ import CartSidebar from "./components/CartSidebar";
 const HomePage = lazy(() => import("./pages/HomePage"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 const TrackOrder = lazy(() => import("./pages/TrackOrder"));
-const ProductDetailsPage = lazy(() => import("./pages/ProductDetailsPage"));
 
 export default function App() {
   return (
@@ -30,7 +29,6 @@ export default function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/track" element={<TrackOrder />} />
-                <Route path="/product/:id" element={<ProductDetailsPage />} />
               </Routes>
             </Suspense>
           </main>
